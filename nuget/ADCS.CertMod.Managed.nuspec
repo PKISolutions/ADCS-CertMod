@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>ADCS.CertMod.Managed</id>
+        <version>0.3.0</version>
+        <authors>Vadims Podans, PKI Solutions Inc.</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <!-- <icon>icon.png</icon> -->
+        <projectUrl>https://github.com/PKISolutions/ADCS-CertMod</projectUrl>
+        <description>Base framework to build ADCS Certification Authority policy and exit modules</description>
+        <releaseNotes>Initial release.</releaseNotes>
+        <copyright>© PKI Solutions Inc., 2022</copyright>
+        <tags>PKI ADCS CertificateServices</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework4.7.2"/>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\ADCS.CertMod.Managed\bin\Release\*.*" target="lib/net472"/>
+    </files>
+</package>
