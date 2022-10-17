@@ -43,7 +43,7 @@
     <Reference Include="CERTCLILib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5db31a0b7668d81, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>_Reference\CERTCLILib.dll</HintPath>
+      <HintPath>..\lib\CERTCLILib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -85,11 +85,11 @@
     <None Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="_Reference\CERTCLILib.dll" />
+    <Content Include="lib\CERTCLILib.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="StrongName.snk" />
-    <None Include="_Reference\CERTCLILib.il" />
+    <None Include="lib\CERTCLILib.il" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
