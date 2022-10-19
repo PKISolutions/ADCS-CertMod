@@ -8,8 +8,10 @@ namespace ADCS.CertMod.Managed.Policy;
 /// </summary>
 public abstract class CertPolicyBase : ICertPolicy2 {
     const String WINDOWS_POLICY_DEFAULT = "CertificateAuthority_MicrosoftDefault.Policy";
-
-    ICertPolicy defaultPolicy;
+    
+    Action funcShutdown;
+    Action<String> funcInitialize;
+    Func<String, Int32, Int32, Int32, PolicyModuleAction> funcVerifyRequest;
 
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
@@ -35,7 +37,8 @@ public abstract class CertPolicyBase : ICertPolicy2 {
 
     /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
     public virtual PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
-        return defaultPolicy.VerifyRequest(strConfig, Context, bNewRequest, Flags);
+        
+        return funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
     }
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
     public virtual void Initialize(String strConfig) {
@@ -58,27 +61,37 @@ public abstract class CertPolicyBase : ICertPolicy2 {
                 }
             }
         }
-            
 
         try {
-            defaultPolicy = Activator.CreateInstance(nativePolicyModuleType) as ICertPolicy;
+            Object instance = Activator.CreateInstance(nativePolicyModuleType);
+            if (instance == null) {
+                throw new ArgumentException("Native policy module instance is null.");
+            }
+            if (instance is ICertPolicy certPolicy) {
+                funcShutdown = certPolicy.ShutDown;
+                funcInitialize = certPolicy.Initialize;
+                funcVerifyRequest = certPolicy.VerifyRequest;
+            } else {
+                funcShutdown = (Action)Delegate.CreateDelegate(typeof(Action), instance, nameof(ICertPolicy.ShutDown));
+                funcInitialize = (Action<String>)Delegate.CreateDelegate(typeof(Action<String>), instance, nameof(ICertPolicy.Initialize));
+                funcVerifyRequest = (Func<String, Int32, Int32, Int32, PolicyModuleAction>)Delegate.CreateDelegate(
+                    typeof(Func<String, Int32, Int32, Int32, PolicyModuleAction>),
+                    instance,
+                    nameof(ICertPolicy.VerifyRequest));
+            }
         } catch (Exception ex) {
             Logger.LogCritical("Unable to create a native policy module instance.");
             Logger.LogCritical(ex, "[CertPolicyBase::Initialize]");
             throw;
         }
 
-        if (defaultPolicy == null) {
-            throw new ArgumentException("Native policy module instance is not of type of ICertPolicy.");
-        }
-
         Logger.LogDebug("[CertPolicyBase::Initialize] Initializing native policy module.");
-        defaultPolicy.Initialize(strConfig);
+        funcInitialize.Invoke(strConfig);
         Logger.LogDebug("[CertPolicyBase::Initialize] Native policy module successfully initialized.");
     }
     /// <inheritdoc cref="ICertPolicy2.ShutDown" />
     public virtual void ShutDown() {
-        defaultPolicy.ShutDown();
+        funcShutdown.Invoke();
     }
     /// <inheritdoc cref="ICertPolicy.GetDescription"/>
     public abstract String GetDescription();
