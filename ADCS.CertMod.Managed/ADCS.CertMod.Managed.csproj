@@ -55,6 +55,7 @@
     <Compile Include="AppConfigEntry.cs" />
     <Compile Include="CertDbRow.cs" />
     <Compile Include="CertServerModule.cs" />
+    <Compile Include="Exit\CertExitBase.cs" />
     <Compile Include="Exit\ExitEvents.cs" />
     <Compile Include="Exit\ICertExit2.cs" />
     <Compile Include="Exit\ICertManageModule.cs" />

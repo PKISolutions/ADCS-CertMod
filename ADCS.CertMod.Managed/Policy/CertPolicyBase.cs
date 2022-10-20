@@ -16,11 +16,20 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
     /// </summary>
-    /// <exception cref="ArgumentException">
-    /// An instance of <strong>Windows Default</strong> cannot be created.
-    /// </exception>
+    /// <param name="logger">An instance of custom implementation of <see cref="ILogWriter"/> interface.</param>
+    /// <exception cref="ArgumentNullException"><strong>logger</strong> parameter is null.</exception>
     protected CertPolicyBase(ILogWriter logger) {
-        Logger = logger;
+        Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        CertServer = CertServerModule.CreatePolicy(Logger);
+    }
+    /// <summary>
+    /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
+    /// </summary>
+    /// <param name="logFileName">Log file name to write stream.</param>
+    /// <param name="logLevel">Initial log level.</param>
+    protected CertPolicyBase(String logFileName, LogLevel logLevel) {
+        Logger = new LogWriter(logFileName, logLevel);
+        CertServer = CertServerModule.CreatePolicy(Logger);
     }
 
     /// <summary>
@@ -31,13 +40,16 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// </summary>
     protected String DefaultPolicyProgID { get; set; }
     /// <summary>
-    /// Gets or sets the 
+    /// Gets the current stream logger.
     /// </summary>
     protected ILogWriter Logger { get; }
+    /// <summary>
+    /// Gets the communicator with Certification Authority.
+    /// </summary>
+    protected CertServerModule CertServer { get; }
 
     /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
     public virtual PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
-        
         return funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
     }
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
