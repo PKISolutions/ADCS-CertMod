@@ -87,11 +87,9 @@
     <None Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="lib\CERTCLILib.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="StrongName.snk" />
-    <None Include="lib\CERTCLILib.il" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
