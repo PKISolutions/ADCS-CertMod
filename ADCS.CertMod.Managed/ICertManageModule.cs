@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace ADCS.CertMod.Managed.Exit;
+namespace ADCS.CertMod.Managed;
 
 /// <summary>
 /// The <strong>ICertManageModule</strong> interface is provided to retrieve information about a
