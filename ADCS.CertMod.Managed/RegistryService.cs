@@ -7,12 +7,22 @@ using Microsoft.Win32;
 
 namespace ADCS.CertMod.Managed;
 
+/// <summary>
+/// Represents registry access utility service that simplifies registry access by policy or exit module.
+/// This class is abstract and cannot be instantiated directly.
+/// </summary>
 public abstract class RegistryService {
     const String REG_TEMPLATE = @"SYSTEM\CurrentControlSet\Services\CertSvc\Configuration\{0}\ExitModules\{1}";
     readonly String _moduleName, _regPath;
 
     Boolean isInitialized;
 
+    /// <summary>
+    /// Initializes a new instance of <strong>RegistryService</strong>
+    /// </summary>
+    /// <param name="moduleName">Module ProgID.</param>
+    /// <param name="policy">A boolean value that indicates whether the module is policy or exit module.</param>
+    /// <exception cref="ArgumentException"></exception>
     protected RegistryService(String moduleName, Boolean policy = false) {
         if (String.IsNullOrEmpty(moduleName)) {
             throw new ArgumentException("Registry key base name cannot be empty.");
@@ -34,6 +44,11 @@ public abstract class RegistryService {
     /// </summary>
     protected String RegPath { get; private set; }
 
+    /// <summary>
+    /// Checks if registry key exists in registry.
+    /// </summary>
+    /// <param name="regKey">Registry key full path.</param>
+    /// <returns><strong>True</strong> if registry key exists, otherwise <strong>False</strong>.</returns>
     protected static Boolean RegKeyExists(String regKey) {
         using RegistryKey key = Registry.LocalMachine.OpenSubKey(regKey);
         return key != null;
@@ -66,6 +81,13 @@ public abstract class RegistryService {
         isInitialized = true;
     }
 
+    /// <summary>
+    /// Gets referral record from registry.
+    /// </summary>
+    /// <param name="target">
+    /// Colon-separated string with exactly 3 tokens: {hive}:{RegistryKey}:{ValueName}
+    /// </param>
+    /// <returns>Referral registry entry if found, otherwise null.</returns>
     protected static RegTriplet GetReferralRecord(String target) {
         String[] tokens = target.Split(':');
         if (tokens.Length != 3) {
@@ -106,6 +128,12 @@ public abstract class RegistryService {
 
         return retValue;
     }
+    /// <summary>
+    /// Gets named record from the current module's configuration storage.
+    /// </summary>
+    /// <param name="name">Registry value name to read.</param>
+    /// <param name="path">Additional path below module's configuration storage.</param>
+    /// <returns>Requested registry value if present, or null if no matching entry found.</returns>
     protected RegTriplet GetRecord(String name, String path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;
@@ -130,6 +158,11 @@ public abstract class RegistryService {
 
         return retValue;
     }
+    /// <summary>
+    /// Gets all records from the current module's configuration storage.
+    /// </summary>
+    /// <param name="path">Additional path below module's configuration storage.</param>
+    /// <returns>A collection of registry entries.</returns>
     protected IEnumerable<RegTriplet> GetRecords(String path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;
@@ -148,6 +181,11 @@ public abstract class RegistryService {
 
         return null;
     }
+    /// <summary>
+    /// Creates or updates registry entry under current module's configuration storage.
+    /// </summary>
+    /// <param name="valuePair">Registry entry to write.</param>
+    /// <param name="path">Additional path below module's configuration storage.</param>
     protected void WriteRecord(RegTriplet valuePair, String path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;
@@ -161,6 +199,11 @@ public abstract class RegistryService {
             key.SetValue(valuePair.Name, valuePair.Value, valuePair.Type);
         }
     }
+    /// <summary>
+    /// Creates or updates registry entries under current module's configuration storage.
+    /// </summary>
+    /// <param name="valuePair">A collection of entries to write.</param>
+    /// <param name="path">Additional path below module's configuration storage.</param>
     protected void WriteRecords(IEnumerable<RegTriplet> valuePair, String path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;
@@ -176,6 +219,11 @@ public abstract class RegistryService {
             }
         }
     }
+    /// <summary>
+    /// Deletes named registry entry from the current module's configuration storage.
+    /// </summary>
+    /// <param name="name">Registry value name.</param>
+    /// <param name="path">Additional path below module's configuration storage.</param>
     protected void DeleteRecord(String name, String path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;
@@ -184,6 +232,11 @@ public abstract class RegistryService {
         using RegistryKey key = Registry.LocalMachine.OpenSubKey(path, RegistryKeyPermissionCheck.ReadWriteSubTree);
         key?.DeleteValue(name);
     }
+    /// <summary>
+    /// Deletes named registry entries from the current module's configuration storage.
+    /// </summary>
+    /// <param name="names">A collection of registry value names.</param>
+    /// <param name="path">Additional path below module's configuration storage.</param>
     protected void DeleteRecords(IEnumerable<String> names, String path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;

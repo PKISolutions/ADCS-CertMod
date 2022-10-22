@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains an enumeration of certificate properties available in CA database.
 /// </summary>
-public enum CertificatePropertyName {
+enum CertificatePropertyName {
     RequestID,
     RawCertificate,
     CertificateHash,

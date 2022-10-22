@@ -9,10 +9,21 @@ namespace ADCS.CertMod.Managed;
 /// Represents managed registry key value.
 /// </summary>
 public class RegTriplet {
+    /// <summary>
+    /// Initializes a new instance of <strong>RegTriplet</strong> class from entry name and value type.
+    /// </summary>
+    /// <param name="name">Registry value name.</param>
+    /// <param name="type">Registry value type.</param>
     public RegTriplet(String name, RegistryValueKind type) {
         Name = name;
         Type = type;
     }
+    /// <summary>
+    /// Initializes a new instance of <strong>RegTriplet</strong> class from app config entry.
+    /// </summary>
+    /// <param name="entry"></param>
+    /// <exception cref="ArgumentNullException"><strong>entry</strong> parameter is null.</exception>
+    /// <exception cref="ArgumentException">entry name is null or empty string.</exception>
     public RegTriplet(AppConfigEntry entry) {
         if (entry == null) {
             throw new ArgumentNullException(nameof(entry));

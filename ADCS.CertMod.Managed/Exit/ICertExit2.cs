@@ -4,6 +4,11 @@ using System.Runtime.InteropServices;
 
 namespace ADCS.CertMod.Managed.Exit;
 
+/// <summary>
+/// The ICertExit2 interface provides communications between the Certificate Services server and an exit module.
+/// This interface extends <see cref="ICertExit"/> interface.
+/// </summary>
+/// <seealso href="https://learn.microsoft.com/en-us/windows/win32/api/certexit/nn-certexit-icertexit2"/>
 [Guid("0abf484b-d049-464d-a7ed-552e7529b0ff")] // from CertExit.idl
 [TypeLibType(TypeLibTypeFlags.FDispatchable | TypeLibTypeFlags.FDual)]
 [ComImport]

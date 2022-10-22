@@ -2,9 +2,16 @@
 
 namespace ADCS.CertMod.Managed.Exit;
 
+/// <summary>
+/// Contains enumeration of possible exit events.
+/// <para>This enumeration has a <see cref="FlagsAttribute"/> attribute that allows a bitwise combination of its member values.</para>
+/// </summary>
 [Flags]
 public enum ExitEvents {
-    Invalid = 0x0,
+    /// <summary>
+    /// Invalid
+    /// </summary>
+    None       = 0x0,
     /// <summary>
     /// Fired when new certificate is issued (either, manually, or after CA Manager approval)
     /// </summary>
@@ -45,6 +52,9 @@ public enum ExitEvents {
     /// Fired when foreign certificate is imported into CA database.
     /// </summary>
     CertImported = 0x200,
+    /// <summary>
+    /// All events.
+    /// </summary>
     AllEvents = CertIssued | CertPending | CertDenied | CertRevoked | CertRetrievePending
                 | CRLIssued | Shutdown | ServiceStart | CertUnrevoked | CertImported
 }

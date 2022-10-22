@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains enumeration of request attributes.
 /// </summary>
-public enum RequestAttributeName {
+enum RequestAttributeName {
     Challenge, // NETSCAPE
     ExpectedChallenge, // NETSCAPE
     Disposition,

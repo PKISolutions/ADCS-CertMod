@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains enumeration of request properties.
 /// </summary>
-public enum RequestPropertyName {
+enum RequestPropertyName {
     RequestID,
     RawRequest,
     RawArchivedKey,

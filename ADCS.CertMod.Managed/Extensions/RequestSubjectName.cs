@@ -3,7 +3,7 @@
 /// <summary>
 /// Contains enumeration of subject/issuer name RDN attributes.
 /// </summary>
-public enum RequestSubjectName {
+enum RequestSubjectName {
     DistinguishedName,
     RawName,
     Country,

@@ -7,6 +7,12 @@ namespace ADCS.CertMod.Managed;
 /// </summary>
 public class AppConfigEntry {
 
+    /// <summary>
+    /// Initializes a new instance of <strong>AppConfigEntry</strong> class.
+    /// </summary>
+    /// <param name="name">App config entry name.</param>
+    /// <param name="value">App config value.</param>
+    /// <param name="type">App config CLR type.</param>
     public AppConfigEntry(String name, Object value, Type type = null) {
         Name = name;
         Value = value;
