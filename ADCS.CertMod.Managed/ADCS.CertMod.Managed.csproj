@@ -56,8 +56,10 @@
     <Compile Include="CertDbRow.cs" />
     <Compile Include="CertServerModule.cs" />
     <Compile Include="AdcsCrlReason.cs" />
+    <Compile Include="Exit\CertServerExitManaged.cs" />
     <Compile Include="GeneralFlags.cs" />
     <Compile Include="EnrollmentFlags.cs" />
+    <Compile Include="Policy\CertServerPolicyManaged.cs" />
     <Compile Include="PrivateKeyFlags.cs" />
     <Compile Include="Exit\CertExitBase.cs" />
     <Compile Include="Exit\ExitEvents.cs" />
@@ -72,7 +74,7 @@
     <Compile Include="Extensions\RequestPropertyName.cs" />
     <Compile Include="Extensions\RequestSubjectName.cs" />
     <Compile Include="Extensions\SecureStringExtensions.cs" />
-    <Compile Include="ICertServerExitPolicy.cs" />
+    <Compile Include="CertServerExitPolicyManaged.cs" />
     <Compile Include="ICertServerModule.cs" />
     <Compile Include="ICertServerPolicyManaged.cs" />
     <Compile Include="ILogWriter.cs" />
