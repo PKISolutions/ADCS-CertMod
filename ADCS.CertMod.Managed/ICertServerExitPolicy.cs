@@ -70,8 +70,8 @@ abstract class CertServerExitPolicyManaged : ICertServerModule {
     public void GetCertificateExtension(String strExtensionName, Int32 Type, IntPtr pvarValue) {
         _getCertificateExtension.Invoke(strExtensionName, Type, pvarValue);
     }
-    public Int32 GetCertificateExtensionFlags() {
-        return _getCertificateExtensionFlags.Invoke();
+    public RequestExtensionFlags GetCertificateExtensionFlags() {
+        return (RequestExtensionFlags)_getCertificateExtensionFlags.Invoke();
     }
     public void EnumerateExtensionsSetup(Int32 Flags) {
         _enumerateExtensionsSetup.Invoke(Flags);

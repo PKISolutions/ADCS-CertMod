@@ -64,7 +64,7 @@ public class CertServerModule {
         RequestID = 0;
     }
 
-    public IEnumerable<CertDbRow> GetRequestAttributeCollection() {
+    public IEnumerable<RequestAttribute> GetRequestAttributeCollection() {
         if (!isInitialized) {
             throw new Win32Exception(unchecked((Int32)0x8000ffff), "Unexpected method call sequence.");
         }
@@ -72,25 +72,18 @@ public class CertServerModule {
             return null;
         }
 
-        var retValue = new List<CertDbRow>();
-        String attributeName;
+        var retValue = new List<RequestAttribute>();
 
         _certServerModule.EnumerateAttributesSetup(0);
-        while ((attributeName = _certServerModule.EnumerateAttributes()) != null) {
-            var attributeRow = new CertDbRow {
-                                                 { "AttributeRequestId", RequestID },
-                                                 { "AttributeName", attributeName },
-                                                 { "AttributeValue", _certServerModule.GetRequestAttribute(attributeName) }
-                                             };
-
-            retValue.Add(attributeRow);
+        while (_certServerModule.EnumerateAttributes() is { } attributeName) {
+            retValue.Add(new RequestAttribute(RequestID, attributeName, _certServerModule.GetRequestAttribute(attributeName)));
         }
 
         _certServerModule.EnumerateAttributesClose();
 
         return retValue;
     }
-    public IEnumerable<CertDbRow> GetRequestExtensionCollection() {
+    public IEnumerable<RequestExtension> GetRequestExtensionCollection() {
         if (!isInitialized) {
             throw new Win32Exception(unchecked((Int32)0x8000ffff), "Unexpected method call sequence.");
         }
@@ -98,22 +91,14 @@ public class CertServerModule {
             return null;
         }
 
-        var retValue = new List<CertDbRow>();
-        String extensionName;
+        var retValue = new List<RequestExtension>();
 
         _certServerModule.EnumerateExtensionsSetup(0);
         IntPtr pvarValue = Marshal.AllocHGlobal(4096);
-        while ((extensionName = _certServerModule.EnumerateExtensions()) != null) {
+        while (_certServerModule.EnumerateExtensions() is { } extensionName) {
             _certServerModule.GetCertificateExtension(extensionName, CertSrvH.PROPTYPE_BINARY, pvarValue);
-            Int32 flags = _certServerModule.GetCertificateExtensionFlags();
-            var extensionRow = new CertDbRow {
-                                                 { "ExtensionRequestId", RequestID },
-                                                 { "ExtensionName", extensionName },
-                                                 { "ExtensionFlags", flags },
-                                                 { "ExtensionRawValue", pvarValue.GetBstrBinary(_logger) }
-                                             };
-
-            retValue.Add(extensionRow);
+            RequestExtensionFlags flags = _certServerModule.GetCertificateExtensionFlags();
+            retValue.Add(new RequestExtension(RequestID, extensionName, flags, pvarValue.GetBstrBinary(_logger)));
             OleAut32.VariantClear(pvarValue);
         }
 
