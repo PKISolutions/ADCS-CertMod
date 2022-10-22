@@ -55,6 +55,7 @@
     <Compile Include="AppConfigEntry.cs" />
     <Compile Include="CertDbRow.cs" />
     <Compile Include="CertServerModule.cs" />
+    <Compile Include="AdcsCrlReason.cs" />
     <Compile Include="GeneralFlags.cs" />
     <Compile Include="EnrollmentFlags.cs" />
     <Compile Include="PrivateKeyFlags.cs" />
@@ -86,8 +87,11 @@
     <Compile Include="RegistryService.cs" />
     <Compile Include="RegTriplet.cs" />
     <Compile Include="RequestAttribute.cs" />
+    <Compile Include="RequestDisposition.cs" />
     <Compile Include="RequestExtension.cs" />
     <Compile Include="RequestExtensionFlags.cs" />
+    <Compile Include="RequestFlags.cs" />
+    <Compile Include="RequestType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="License.txt">

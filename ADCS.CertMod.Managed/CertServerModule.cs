@@ -367,18 +367,18 @@ public class CertServerModule {
     /// Returns request type.
     /// </summary>
     /// <returns>Request type.</returns>
-    public Int32? GetRequestType() {
-        return _certServerModule.GetLongProperty(pvarPropertyValue, RequestPropertyName.RequestType.ToString());
+    public RequestType? GetRequestType() {
+        return (RequestType?)_certServerModule.GetLongProperty(pvarPropertyValue, RequestPropertyName.RequestType.ToString());
     }
     /// <summary>
     /// Returns request flags.
     /// </summary>
     /// <returns>Request flags.</returns>
-    public Int32 GetRequestFlags() {
-        return _certServerModule.GetRequestProperty<Int32>(pvarPropertyValue, RequestPropertyName.RequestFlags);
+    public RequestFlags GetRequestFlags() {
+        return (RequestFlags)_certServerModule.GetRequestProperty<Int32>(pvarPropertyValue, RequestPropertyName.RequestFlags);
     }
     /// <summary>
-    /// Returns status code.
+    /// Returns HRESULT status code.
     /// </summary>
     /// <returns>Status code.</returns>
     public Int32 GetStatusCode() {
@@ -388,8 +388,8 @@ public class CertServerModule {
     /// Returns disposition status.
     /// </summary>
     /// <returns>Disposition status.</returns>
-    public Int32 GetDisposition() {
-        return _certServerModule.GetRequestProperty<Int32>(pvarPropertyValue, RequestPropertyName.Disposition);
+    public RequestDisposition GetDisposition() {
+        return (RequestDisposition)_certServerModule.GetRequestProperty<Int32>(pvarPropertyValue, RequestPropertyName.Disposition);
     }
     /// <summary>
     /// Returns disposition status message.
@@ -430,8 +430,8 @@ public class CertServerModule {
     /// Returns revocation reason.
     /// </summary>
     /// <returns>Revocation reason.</returns>
-    public Int32? GetRevokedReason() {
-        return _certServerModule.GetLongProperty(pvarPropertyValue, RequestPropertyName.RevokedReason.ToString());
+    public AdcsCrlReason? GetRevokedReason() {
+        return (AdcsCrlReason?)_certServerModule.GetLongProperty(pvarPropertyValue, RequestPropertyName.RevokedReason.ToString());
     }
     /// <summary>
     /// Returns requester name.
@@ -473,8 +473,8 @@ public class CertServerModule {
     /// </summary>
     /// <returns>
     /// <list type="bullet">
-    /// <item><strong>True</strong> -- certificate (when revoked and expired) is added in CRL,</item>
-    /// <item><strong>False</strong> or <strong>null</strong> -- certificate (when revoked and expired) is not added in CRL.</item>
+    /// <item><strong>non-zero</strong> -- certificate (when revoked and expired) is added in CRL,</item>
+    /// <item><strong>0</strong> or <strong>null</strong> -- certificate (when revoked and expired) is not added in CRL.</item>
     /// </list>
     /// </returns>
     public Int32? GetPublishExpiredCertInCRL() {
