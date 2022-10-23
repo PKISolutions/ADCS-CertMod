@@ -147,7 +147,8 @@ public class CertServerModule {
     /// <summary>
     /// Returns an underlying implementation of <see cref="ICertServerPolicyManaged"/> interface.
     /// </summary>
-    /// <returns></returns>
+    /// <exception cref="InvalidCastException">Current context is not policy module context.</exception>
+    /// <returns>Native policy module communicator. Throws exception if current context is exit module.</returns>
     public ICertServerPolicyManaged GetManagedPolicyModule() {
         return (ICertServerPolicyManaged)_certServerModule;
     }
@@ -866,7 +867,7 @@ public class CertServerModule {
     /// <summary>
     /// Returns a user principal name (UPN) from issued certificate.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>User principal name.</returns>
     public String GetUPN() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.UPN);
     }
