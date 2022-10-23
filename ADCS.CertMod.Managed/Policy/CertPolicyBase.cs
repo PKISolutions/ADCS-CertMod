@@ -1,5 +1,4 @@
 ﻿using System;
-using ADCS.CertMod.Managed.Exit;
 
 namespace ADCS.CertMod.Managed.Policy;
 
@@ -50,6 +49,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
 
     /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
     public virtual PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
+        CertServer.InitializeContext(Context);
         return funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
     }
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
@@ -79,11 +79,17 @@ public abstract class CertPolicyBase : ICertPolicy2 {
             if (instance == null) {
                 throw new ArgumentException("Native policy module instance is null.");
             }
+            // we can cast native COM-based policy module to our ICertPolicy interface.
+            // we cannot cast native .NET-based policy module to our ICertPolicy interface
+            // because of how CLR distinguishes types.
+            // In addition, we cannot create delegates from COM object using Delegate.CreateDelegate,
+            // as the result we have to use different approaches for different policy module implementations.
             if (instance is ICertPolicy certPolicy) {
                 funcShutdown = certPolicy.ShutDown;
                 funcInitialize = certPolicy.Initialize;
                 funcVerifyRequest = certPolicy.VerifyRequest;
             } else {
+                // we cannot cast native .NET-based policy module to our ICertPolicy interface
                 funcShutdown = (Action)Delegate.CreateDelegate(typeof(Action), instance, nameof(ICertPolicy.ShutDown));
                 funcInitialize = (Action<String>)Delegate.CreateDelegate(typeof(Action<String>), instance, nameof(ICertPolicy.Initialize));
                 funcVerifyRequest = (Func<String, Int32, Int32, Int32, PolicyModuleAction>)Delegate.CreateDelegate(
