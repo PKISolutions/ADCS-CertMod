@@ -3,7 +3,7 @@
 ## Download
 Use NuGet to download the library and attach to your .NET project:
 ```
-NuGet\Install-Package ADCS.CertMod.Managed -Version 1.0.0
+NuGet\Install-Package ADCS.CertMod.Managed -Version 1.2.0
 ```
 
 ## Status:
