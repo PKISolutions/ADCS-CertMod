@@ -9,6 +9,9 @@ NuGet\Install-Package ADCS.CertMod.Managed -Version 1.0.0
 ## Status:
 ![image](https://dev.azure.com/pkisolutions/ADCS-CertMod/_apis/build/status/ADCS-CertMod-Nupkg?branchName=master&jobName=Agent%20job%201) ![image](https://img.shields.io/nuget/v/ADCS.CertMod.Managed)
 
+## Online API documentation
+[Documentation](https://www.pkisolutions.com/apidocs/certmod)
+
 ## Exit Module guide
 Two interfaces must be implemented and exposed to COM world in order to create an exit module:
 - `ICertManageModule`
