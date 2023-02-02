@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="AppConfigEntry.cs" />
     <Compile Include="CertDbRow.cs" />
+    <Compile Include="CertManageModule.cs" />
     <Compile Include="CertServerModule.cs" />
     <Compile Include="AdcsCrlReason.cs" />
     <Compile Include="Exit\CertServerExitManaged.cs" />

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ADCS.CertMod.Managed")]
 [assembly: AssemblyDescription("Base framework to build ADCS Certification Authority policy and exit modules")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("PKI Solutions Inc.")]
+[assembly: AssemblyCompany("PKI Solutions LLC")]
 [assembly: AssemblyProduct("ADCS.CertMod.Managed")]
-[assembly: AssemblyCopyright("© PKI Solutions Inc., 2022")]
+[assembly: AssemblyCopyright("© PKI Solutions LLC, 2022-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
