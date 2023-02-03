@@ -35,11 +35,10 @@
     <DocumentationFile>bin\Release\ADCS.CertMod.Managed.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>strongname.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CERTCLILib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5db31a0b7668d81, processorArchitecture=MSIL">
@@ -101,6 +100,7 @@
     <None Include="License.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="strongname.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
