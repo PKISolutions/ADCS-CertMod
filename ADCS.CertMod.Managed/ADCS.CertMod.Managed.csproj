@@ -97,9 +97,6 @@
     <Compile Include="RequestType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="License.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="strongname.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
