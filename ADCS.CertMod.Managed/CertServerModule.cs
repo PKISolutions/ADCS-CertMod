@@ -82,6 +82,7 @@ public class CertServerModule {
         }
     }
     void initializeContext(Int32 context) {
+        FinalizeContext();
         pvarPropertyValue = Marshal.AllocHGlobal(32768);
         _certServerModule.SetContext(context);
 
