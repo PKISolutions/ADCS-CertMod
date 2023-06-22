@@ -70,6 +70,9 @@ public class CertServerModule {
             case ExitEvents.CertPending:
             case ExitEvents.CertDenied:
             case ExitEvents.CertRevoked:
+            case ExitEvents.CertImported:
+            case ExitEvents.CertUnrevoked:
+            case ExitEvents.CertRetrievePending:
                 RequestID = GetRequestID();
                 _logger.LogTrace("Request ID: {0}", RequestID);
                 break;
@@ -90,7 +93,10 @@ public class CertServerModule {
     /// and <see cref="ICertPolicy.VerifyRequest"/> method processing.
     /// </summary>
     public void FinalizeContext() {
-        Marshal.FreeHGlobal(pvarPropertyValue);
+        if (!IntPtr.Zero.Equals(pvarPropertyValue)) {
+            Marshal.FreeHGlobal(pvarPropertyValue);
+            pvarPropertyValue = IntPtr.Zero;
+        }
         isInitialized = false;
         RequestID = 0;
     }
