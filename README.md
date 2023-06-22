@@ -18,28 +18,30 @@ Two interfaces must be implemented and exposed to COM world in order to create a
 - `ICertExit2`
 
 ### ICertManageModule interface
-Create a class that implements `ICertManageModule` and define the following attributes:
+Create a class that inherits from `CertManageModule` class and define the following attributes:
 ```C#
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 [ProgId("<ModuleName>.ExitManage")]
 [Guid("<00000000-0000-0000-0000-000000000000>")]
-public class ExitManage : ICertManageModule {
+public class ExitManage : CertManageModule {
 <...>
 }
 ```
-- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.Exit`.
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.ExitManage`.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
-- At a minimum, only `ICertManageModule.GetProperty` method must be implemented.
+- At a minimum, only `CertManageModule.GetProperty` method must be overriden.
+
+**Note:** angle brackets are used for reference only, they are not used.
 
 ### ICertExit2 interface
-Create a class that implements `ICertExit2` interface and define the following attributes:
+Create a class that inherits from `CertExitBase` class and define the following attributes:
 ```C#
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 [ProgId("<ModuleName>.Exit")]
 [Guid("<00000000-0000-0000-0000-000000000000>")]
-public class MyExitClass : ICertExit2 {
+public class MyExitClass : CertExitBase {
 <...>
 }
 ```
@@ -47,6 +49,7 @@ public class MyExitClass : ICertExit2 {
 - `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.Exit`.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
 - `ICertExit2.GetManageModule` returns an instance of `ICertManageModule` implementation (see above).
+- a base `CertExitBase.Notify` method shall be called before executing custom code in `Notify` method override.
 
 ## Policy module guide
 Two interfaces must be implemented and exposed to COM world in order to create an exit module:
@@ -55,16 +58,16 @@ Two interfaces must be implemented and exposed to COM world in order to create a
 
 
 ### ICertManageModule interface
-Create a class that implements `ICertManageModule` and define the following attributes:
+Create a class that inherits from `CertManageModule` class and define the following attributes:
 ```C#
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 [ProgId("<ModuleName>.PolicyManage")]
 [Guid("<00000000-0000-0000-0000-000000000000>")]
-public class PolicyManage : ICertManageModule {
+public class PolicyManage : CertManageModule {
 <...>
 }
 ```
-- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.Policy`.
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.PolicyManage`.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
-- At a minimum, only `ICertManageModule.GetProperty` method must be implemented.
+- At a minimum, only `CertManageModule.GetProperty` method must be implemented.
