@@ -100,13 +100,14 @@ public class LogWriter : ILogWriter {
         lock (_lock) {
             try {
                 using StreamWriter sw = File.AppendText(_logPath);
-                sw.WriteLine($"[{DateTime.Now}] Exception at source: {source}");
+                sw.WriteLine($"[{DateTime.Now}] An exception at source '{source}' occurred.");
                 Exception e = exception;
                 do {
+                    sw.WriteLine("Exception type: " + e.GetType().FullName);
                     sw.WriteLine($"Error message: {e.Message}");
                 } while ((e = e.InnerException) != null);
                 sw.WriteLine("Stack Trace:");
-                sw.WriteLine($"{exception.StackTrace}");
+                sw.WriteLine($"{exception.StackTrace?.TrimEnd()}");
             } catch { }
         }
     }
