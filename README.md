@@ -7,7 +7,7 @@ NuGet\Install-Package ADCS.CertMod.Managed
 ```
 
 ## Status:
-![image](https://dev.azure.com/pkisolutions/ADCS-CertMod/_apis/build/status/ADCS-CertMod-Nupkg?branchName=master&jobName=Agent%20job%201) ![image](https://img.shields.io/nuget/v/ADCS.CertMod.Managed)
+![image](https://dev.azure.com/pkisolutions/ADCS-CertMod/_apis/build/status/ADCS-CertMod-Nupkg?branchName=master&jobName=Agent%20job%201) ![image](https://vsrm.dev.azure.com/pkisolutions/_apis/public/Release/badge/8c06c171-5a0f-4829-83bc-f52ed00db68c/1/1) ![image](https://img.shields.io/nuget/v/ADCS.CertMod.Managed)
 
 ## Online API documentation
 [Documentation](https://www.pkisolutions.com/apidocs/certmod)
