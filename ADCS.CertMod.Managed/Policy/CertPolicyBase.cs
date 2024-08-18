@@ -52,6 +52,13 @@ public abstract class CertPolicyBase : ICertPolicy2 {
         CertServer.InitializeContext(Context);
         return funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
     }
+    /// <summary>
+    /// Same as VerifyRequest method, but no CertServer context initialization done, making this function thread-safe.
+    /// </summary>
+    public PolicyModuleAction InvokeVerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags)
+    {
+        return funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
+    }
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
     public virtual void Initialize(String strConfig) {
         Type nativePolicyModuleType;
