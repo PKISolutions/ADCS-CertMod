@@ -5,7 +5,7 @@ namespace ADCS.CertMod.Managed.Extensions;
 /// <summary>
 /// Contains useful CA constants.
 /// </summary>
-static class CertSrvH {
+public static class CertSrvH {
     public const Int32 PROPTYPE_LONG   = 1;
     public const Int32 PROPTYPE_DATE   = 2;
     public const Int32 PROPTYPE_BINARY = 3;
