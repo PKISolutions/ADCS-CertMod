@@ -1,7 +1,7 @@
 # Active Directory Certificate Services Exit and Policy module framework
 
 ## Download
-Use NuGet to download the library and attach to your .NET project:
+Use [NuGet](https://www.nuget.org/packages/ADCS.CertMod.Managed) to download the library and attach to your .NET project:
 ```
 NuGet\Install-Package ADCS.CertMod.Managed
 ```
