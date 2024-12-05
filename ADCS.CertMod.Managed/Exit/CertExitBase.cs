@@ -50,8 +50,11 @@ public abstract class CertExitBase : ICertExit2 {
     public void Notify(ExitEvents ExitEvent, Int32 Context) {
         CertServerModule certServer = _pool.GetNext();
         certServer.InitializeEvent(Context, ExitEvent);
-        Notify(certServer, ExitEvent, Context);
-        _pool.Return(certServer);
+        try {
+            Notify(certServer, ExitEvent, Context);
+        } finally {
+            _pool.Return(certServer);
+        }
     }
     /// <inheritdoc cref="ICertExit.Notify" />
     /// <param name="certServer">An instance of <see cref="CertServerModule"/> class that allows to access request details.</param>
