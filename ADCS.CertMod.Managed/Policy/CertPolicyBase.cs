@@ -7,7 +7,10 @@ namespace ADCS.CertMod.Managed.Policy;
 /// </summary>
 public abstract class CertPolicyBase : ICertPolicy2 {
     const String WINDOWS_POLICY_DEFAULT = "CertificateAuthority_MicrosoftDefault.Policy";
-    
+    const Int32 DEFAULT_POOL_SIZE = 32;
+
+    readonly CertServerModulePool _pool;
+
     Action funcShutdown;
     Action<String> funcInitialize;
     Func<String, Int32, Int32, Int32, PolicyModuleAction> funcVerifyRequest;
@@ -16,19 +19,23 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
     /// </summary>
     /// <param name="logger">An instance of custom implementation of <see cref="ILogWriter"/> interface.</param>
+    /// <param name="poolSize">Cert Server module pool size. Size must be between 1 and 63. Default is 32.</param>
     /// <exception cref="ArgumentNullException"><strong>logger</strong> parameter is null.</exception>
-    protected CertPolicyBase(ILogWriter logger) {
+    /// <exception cref="ArgumentOutOfRangeException"><strong>poolSize</strong> value is beyond 1-63 range.</exception>
+    protected CertPolicyBase(ILogWriter logger, Int32 poolSize = DEFAULT_POOL_SIZE) {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        CertServer = CertServerModule.CreatePolicy(Logger);
+        _pool = new CertServerModulePool(poolSize, true, Logger);
     }
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
     /// </summary>
     /// <param name="logFileName">Log file name to write stream.</param>
     /// <param name="logLevel">Initial log level.</param>
-    protected CertPolicyBase(String logFileName, LogLevel logLevel) {
+    /// <param name="poolSize">Cert Server module pool size. Size must be between 1 and 63. Default is 32.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><strong>poolSize</strong> value is beyond 1-63 range.</exception>
+    protected CertPolicyBase(String logFileName, LogLevel logLevel, Int32 poolSize = DEFAULT_POOL_SIZE) {
         Logger = new LogWriter(logFileName, logLevel);
-        CertServer = CertServerModule.CreatePolicy(Logger);
+        _pool = new CertServerModulePool(poolSize, true, Logger);
     }
 
     /// <summary>
@@ -43,15 +50,31 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// </summary>
     protected ILogWriter Logger { get; }
     /// <summary>
-    /// Gets the communicator with Certification Authority.
+    /// <strong>Obsolete.</strong> This member is obsolete.
+    /// Use provided instance in <see cref="VerifyRequest(CertServerModule, PolicyModuleAction, Boolean)"/> overload.
     /// </summary>
+    [Obsolete("This member is not thread-safe. Use provided instance in 'VerifyRequest(CertServerModule, PolicyModuleAction, Boolean)' overload.", true)]
     protected CertServerModule CertServer { get; }
 
     /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
-    public virtual PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
-        CertServer.InitializeContext(Context);
-        return funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
+    public PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
+        CertServerModule certServer = _pool.GetNext();
+        certServer.InitializeContext(Context);
+
+        PolicyModuleAction nativeResult = funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
+        try {
+            return VerifyRequest(certServer, nativeResult, bNewRequest > 0);
+        } finally {
+            _pool.Return(certServer);
+        }
     }
+
+    /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
+    /// <param name="certServer">An instance of <see cref="CertServerModule"/> class that allows to access request details.</param>
+    /// <param name="nativeResult">Native policy module result for current request.</param>
+    /// <param name="bNewRequest">A boolean that indicates if request is new request, or renewal request.</param>
+    protected abstract PolicyModuleAction VerifyRequest(CertServerModule certServer, PolicyModuleAction nativeResult, Boolean bNewRequest);
+
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
     public virtual void Initialize(String strConfig) {
         Type nativePolicyModuleType;

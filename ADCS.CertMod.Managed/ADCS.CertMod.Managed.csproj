@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <DocumentationFile>bin\Release\ADCS.CertMod.Managed.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -57,9 +57,11 @@
     <Compile Include="CertManageModule.cs" />
     <Compile Include="CertServerModule.cs" />
     <Compile Include="AdcsCrlReason.cs" />
+    <Compile Include="CertServerModulePool.cs" />
     <Compile Include="Exit\CertServerExitManaged.cs" />
     <Compile Include="GeneralFlags.cs" />
     <Compile Include="EnrollmentFlags.cs" />
+    <Compile Include="ObjectPool.cs" />
     <Compile Include="Policy\CertServerPolicyManaged.cs" />
     <Compile Include="PrivateKeyFlags.cs" />
     <Compile Include="Exit\CertExitBase.cs" />
