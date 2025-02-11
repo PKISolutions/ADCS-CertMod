@@ -72,7 +72,7 @@ Two interfaces must be implemented and exposed to COM world in order to create a
 
 
 ### ICertManageModule interface
-See [section above](icertmanagemodule-interface)
+See [section above](#icertmanagemodule-interface).
 
 ### ICertPolicy2 interface
 Create a class that inherits from `CertPolicyBase` class (which already implements `ICertPolicy2` interface) and define the following attributes and method overrides:
