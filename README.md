@@ -27,31 +27,43 @@ Create a class that inherits from `CertManageModule` class and define the follow
 [ProgId("<ModuleName>.ExitManage")]
 [Guid("<00000000-0000-0000-0000-000000000000>")]
 public class ExitManage : CertManageModule {
-<...>
+    <...>
+    public override Object GetProperty(String strConfig, String strStorageLocation, String strPropertyName, Int32 Flags) {
+        // implementation goes here.
+    }
+    <...>
 }
 ```
-- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.ExitManage`.
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.ExitManage`. ProgID and CLR class name are not required to match.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
 - At a minimum, only `CertManageModule.GetProperty` method must be overriden.
 
 **Note:** angle brackets are used for reference only, they are not used.
 
 ### ICertExit2 interface
-Create a class that inherits from `CertExitBase` class and define the following attributes:
+Create a class that inherits from `CertExitBase` class (which already implements `ICertExit2` interface) and define the following attributes and method overrides:
 ```C#
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
 [ProgId("<ModuleName>.Exit")]
 [Guid("<00000000-0000-0000-0000-000000000000>")]
 public class MyExitClass : CertExitBase {
-<...>
+    <...>
+    // implement public 'Initialize' method
+    public override ExitEvents Initialize(String strConfig) {
+        // exit module initialization logic goes here
+    }
+    // implement protected 'Notify' method with your business logic:
+    protected override void Notify(CertServerModule certServer, ExitEvents ExitEvent, Int32 Context) {
+        // exit module business logic goes here.
+    }
+    <...>
 }
 ```
 
 - `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.Exit`.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
 - `ICertExit2.GetManageModule` returns an instance of `ICertManageModule` implementation (see above).
-- a base `CertExitBase.Notify` method shall be called before executing custom code in `Notify` method override.
 
 ## Policy module guide
 Two interfaces must be implemented and exposed to COM world in order to create an exit module:
@@ -60,16 +72,25 @@ Two interfaces must be implemented and exposed to COM world in order to create a
 
 
 ### ICertManageModule interface
-Create a class that inherits from `CertManageModule` class and define the following attributes:
+See [section above](icertmanagemodule-interface)
+
+### ICertPolicy2 interface
+Create a class that inherits from `CertPolicyBase` class (which already implements `ICertPolicy2` interface) and define the following attributes and method overrides:
 ```C#
 [ComVisible(true)]
 [ClassInterface(ClassInterfaceType.None)]
-[ProgId("<ModuleName>.PolicyManage")]
+[ProgId("<ModuleName>.Policy")]
 [Guid("<00000000-0000-0000-0000-000000000000>")]
-public class PolicyManage : CertManageModule {
-<...>
+public class MyPolicyClass : CertPolicyBase {
+    <...>
+    // implement protected 'VerifyRequest' method with your business logic:
+    protected abstract PolicyModuleAction VerifyRequest(CertServerModule certServer, PolicyModuleAction nativeResult, Boolean bNewRequest) {
+        // policy module business logic goes here
+    }
+    <...>
 }
 ```
-- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.PolicyManage`.
+
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.Policy`.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
-- At a minimum, only `CertManageModule.GetProperty` method must be implemented.
+- `ICertPolicy2.GetManageModule` returns an instance of `ICertManageModule` implementation (see above).
