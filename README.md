@@ -61,7 +61,7 @@ public class MyExitClass : CertExitBase {
 }
 ```
 
-- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.Exit`.
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolExitModule.Exit`, where `.Exit` suffix is mandatory.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
 - `ICertExit2.GetManageModule` returns an instance of `ICertManageModule` implementation (see above).
 
@@ -91,6 +91,6 @@ public class MyPolicyClass : CertPolicyBase {
 }
 ```
 
-- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.Policy`.
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.Policy`, where `.Policy` suffix is mandatory.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
 - `ICertPolicy2.GetManageModule` returns an instance of `ICertManageModule` implementation (see above).
