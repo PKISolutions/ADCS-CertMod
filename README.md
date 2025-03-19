@@ -84,7 +84,7 @@ Create a class that inherits from `CertPolicyBase` class (which already implemen
 public class MyPolicyClass : CertPolicyBase {
     <...>
     // implement protected 'VerifyRequest' method with your business logic:
-    protected abstract PolicyModuleAction VerifyRequest(CertServerModule certServer, PolicyModuleAction nativeResult, Boolean bNewRequest) {
+    protected override PolicyModuleAction VerifyRequest(CertServerModule certServer, PolicyModuleAction nativeResult, Boolean bNewRequest) {
         // policy module business logic goes here
     }
     <...>
