@@ -13,9 +13,9 @@ public static class SecureStringExtensions {
     const DataProtectionScope dpScope = DataProtectionScope.CurrentUser;
 
     /// <summary>
-    /// Encrypts an instance of <seealso cref="SecureString"/> to a DPAPI-protected string.
+    /// Encrypts an instance of <see cref="SecureString"/> to a DPAPI-protected string.
     /// </summary>
-    /// <param name="password">An instance of <seealso cref="SecureString"/>.</param>
+    /// <param name="password">An instance of <see cref="SecureString"/>.</param>
     /// <returns>DPAPI-protected string.</returns>
     /// <remarks>This method uses current user context for DPAPI.</remarks>
     public static String EncryptPassword(this SecureString password) {
@@ -27,9 +27,9 @@ public static class SecureStringExtensions {
         return Convert.ToBase64String(encryptedData);
     }
     /// <summary>
-    /// Converts an instance of <seealso cref="SecureString"/> back to plain text.
+    /// Converts an instance of <see cref="SecureString"/> back to plain text.
     /// </summary>
-    /// <param name="value">An instance of <seealso cref="SecureString"/>.</param>
+    /// <param name="value">An instance of <se cref="SecureString"/>.</param>
     /// <returns>Plain text string.</returns>
     public static String SecureStringToString(this SecureString value) {
         IntPtr bstr = Marshal.SecureStringToBSTR(value);
@@ -40,10 +40,10 @@ public static class SecureStringExtensions {
         }
     }
     /// <summary>
-    /// Decrypts DPAPI-protected string to an instance of <seealso cref="SecureString"/>.
+    /// Decrypts DPAPI-protected string to an instance of <see cref="SecureString"/>.
     /// </summary>
     /// <param name="encryptedPassword">DPAPI-encrypted string.</param>
-    /// <returns>An instance of <seealso cref="SecureString"/>.</returns>
+    /// <returns>An instance of <see cref="SecureString"/>.</returns>
     /// <remarks>This method uses current user context for DPAPI.</remarks>
     public static SecureString DecryptPassword(this String encryptedPassword) {
         var ss = new SecureString();
@@ -61,7 +61,7 @@ public static class SecureStringExtensions {
     /// Converts plain text string to secure string.
     /// </summary>
     /// <param name="str">Plain text string.</param>
-    /// <returns>An instance of <seealso cref="SecureString"/>.</returns>
+    /// <returns>An instance of <see cref="SecureString"/>.</returns>
     public static SecureString StringToSecureString(this String str) {
         var ss = new SecureString();
         foreach (Char c in str) {
