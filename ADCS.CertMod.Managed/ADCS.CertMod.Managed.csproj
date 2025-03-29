@@ -41,7 +41,7 @@
     <AssemblyOriginatorKeyFile>strongname.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <SourceRoot Include="$(MSBuildThisFileDirectory)/"/>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CERTCLILib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5db31a0b7668d81, processorArchitecture=MSIL">
@@ -64,7 +64,11 @@
     <Compile Include="Exit\CertServerExitManaged.cs" />
     <Compile Include="GeneralFlags.cs" />
     <Compile Include="EnrollmentFlags.cs" />
+    <Compile Include="NDES\DefaultSCEPChallengeGenerator.cs" />
+    <Compile Include="NDES\DefaultSCEPChallengeStore.cs" />
+    <Compile Include="NDES\ISCEPChallengeGenerator.cs" />
     <Compile Include="NDES\INDESPolicy.cs" />
+    <Compile Include="NDES\ISCEPChallengeStore.cs" />
     <Compile Include="NDES\SCEPDisposition.cs" />
     <Compile Include="NDES\SCEPFailInfo.cs" />
     <Compile Include="ObjectPool.cs" />
