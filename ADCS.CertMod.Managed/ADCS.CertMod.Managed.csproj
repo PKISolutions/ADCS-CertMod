@@ -64,6 +64,9 @@
     <Compile Include="Exit\CertServerExitManaged.cs" />
     <Compile Include="GeneralFlags.cs" />
     <Compile Include="EnrollmentFlags.cs" />
+    <Compile Include="NDES\INDESPolicy.cs" />
+    <Compile Include="NDES\SCEPDisposition.cs" />
+    <Compile Include="NDES\SCEPFailInfo.cs" />
     <Compile Include="ObjectPool.cs" />
     <Compile Include="Policy\CertServerPolicyManaged.cs" />
     <Compile Include="PrivateKeyFlags.cs" />
