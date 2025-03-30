@@ -10,11 +10,13 @@ public interface ISCEPChallengeStore {
     /// <summary>
     /// Generates the NDES challenge password.
     /// </summary>
+    /// <param name="template">Specifies template name the challenge password is requested for.</param>
+    /// <param name="parameters">Optional SCEP challenge password parameters.</param>
     /// <returns></returns>
     /// <remarks>
     /// Implementers are responsible to keep track of generated passwords.
     /// </remarks>
-    String GetNextChallenge();
+    String GetNextChallenge(String template, String? parameters);
     /// <summary>
     /// Called by <seealso cref="NdesPolicyBase"/> when challenge is successfully consumed.
     /// Implementers are responsible to remove the challenge from the cache.

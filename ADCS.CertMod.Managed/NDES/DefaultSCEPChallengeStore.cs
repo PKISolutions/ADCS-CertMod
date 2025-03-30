@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 namespace ADCS.CertMod.Managed.NDES;
 
 public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
-    readonly ConcurrentDictionary<String, String> _store = [];
+    readonly ConcurrentDictionary<String, SCEPChallengeStoreEntry> _store = [];
     readonly Int32 _storageLimit;
     readonly ISCEPChallengeGenerator _challengeGenerator;
 
@@ -21,14 +21,14 @@ public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
     }
 
     /// <inheritdoc />
-    public String GetNextChallenge() {
+    public String GetNextChallenge(String template, String? parameters) {
         lock (_store) {
             if (_storageLimit > 0 && _store.Count == _storageLimit) {
                 throw new ArgumentException("Store is full. Cannot generate more passwords.");
             }
 
             String challenge = _challengeGenerator.GenerateChallenge();
-            _store[challenge] = "";
+            _store[challenge] = new SCEPChallengeStoreEntry(challenge, template, parameters);
 
             return challenge;
         }
