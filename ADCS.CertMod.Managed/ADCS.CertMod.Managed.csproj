@@ -69,7 +69,7 @@
     <Compile Include="NDES\ISCEPChallengeGenerator.cs" />
     <Compile Include="NDES\INDESPolicy.cs" />
     <Compile Include="NDES\ISCEPChallengeStore.cs" />
-    <Compile Include="NDES\IsExternalInit.cs" />
+    <Compile Include="Extensions\IsExternalInit.cs" />
     <Compile Include="NDES\SCEPChallengeStoreEntry.cs" />
     <Compile Include="NDES\SCEPDisposition.cs" />
     <Compile Include="NDES\SCEPFailInfo.cs" />
