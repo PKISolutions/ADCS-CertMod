@@ -43,4 +43,9 @@ public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
             throw new ArgumentException("Challenge being released was never generated");
         }
     }
+
+    /// <inheritdoc />
+    public Boolean TryGetChallenge(String challenge, out SCEPChallengeStoreEntry? storeEntry) {
+        return _store.TryGetValue(challenge, out storeEntry);
+    }
 }

@@ -23,4 +23,13 @@ public interface ISCEPChallengeStore {
     /// </summary>
     /// <param name="challenge">Challenge password.</param>
     void ReleaseChallenge(String challenge);
+    /// <summary>
+    /// Attempts to retrieve a cached and not consumed challenge password.
+    /// </summary>
+    /// <param name="challenge">Challenge password to retrieve.</param>
+    /// <param name="storeEntry">Requested challenge password if found, otherwise <c>null</c>.</param>
+    /// <returns><c>true</c> if requested challenge password was found, otherwise <c>false</c>.</returns>
+    /// <remarks>This method should be called in <see cref="INDESPolicy.VerifyRequest"/> or
+    /// <see cref="NdesPolicyBase.OnVerifyRequest"/> implementation to properly authenticate request.</remarks>
+    Boolean TryGetChallenge(String challenge, out SCEPChallengeStoreEntry? storeEntry);
 }
