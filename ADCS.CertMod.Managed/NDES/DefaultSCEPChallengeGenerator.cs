@@ -6,13 +6,14 @@ using System.Text;
 namespace ADCS.CertMod.Managed.NDES;
 
 /// <summary>
-/// Represents a default NDES challenge password generator that uses FIPS-compliant <seealso cref="RNGCryptoServiceProvider"/>
+/// Represents a default NDES challenge password generator that uses FIPS-compliant <see cref="RNGCryptoServiceProvider"/>
 /// to generate cryptographically random challenge password. Produced password is then formatted as a hexadecimal string.
 /// </summary>
 public class DefaultSCEPChallengeGenerator : ISCEPChallengeGenerator {
     readonly Int16 _challengeLength;
     /// <summary>
-    /// Creates a new instance of <seealso cref="DefaultSCEPChallengeGenerator"/> using 
+    /// Creates a new instance of <see cref="DefaultSCEPChallengeGenerator"/> using FIPS-compliant
+    /// <see cref="RNGCryptoServiceProvider"/> to generate cryptographically random challenge password.
     /// </summary>
     /// <param name="challengeLength">
     /// Challenge password length in bytes. Resulting password will be two times longer because of HEX formatting.

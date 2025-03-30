@@ -49,7 +49,7 @@ public interface INDESPolicy {
     /// Verifies the NDES certificate request for submission to the CA.
     /// </summary>
     /// <param name="pctbRequest">The encoded PKCS#10 request.</param>
-    /// <param name="pctbSigningCertEncoded">The valid signing certificate for a renewal request. Set to <seealso cref="IntPtr.Zero"/> for initial request.</param>
+    /// <param name="pctbSigningCertEncoded">The valid signing certificate for a renewal request. Set to <see cref="IntPtr.Zero"/> for initial request.</param>
     /// <param name="pwszTemplate">The template being requested for, as determined by NDES.</param>
     /// <param name="pwszTransactionId">The SCEP request transaction ID.</param>
     /// <returns><c>true</c> if the challenge is verified; otherwise <c>false</c>.</returns>

@@ -18,7 +18,7 @@ public interface ISCEPChallengeStore {
     /// </remarks>
     String GetNextChallenge(String template, String? parameters);
     /// <summary>
-    /// Called by <seealso cref="NdesPolicyBase"/> when challenge is successfully consumed.
+    /// Called by <see cref="NdesPolicyBase"/> when challenge is successfully consumed.
     /// Implementers are responsible to remove the challenge from the cache.
     /// </summary>
     /// <param name="challenge">Challenge password.</param>

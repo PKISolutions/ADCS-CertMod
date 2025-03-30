@@ -10,7 +10,7 @@ public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
     readonly ISCEPChallengeGenerator _challengeGenerator;
 
     /// <summary>
-    /// Initializes a new instance of <seealso cref="DefaultSCEPChallengeStore"/> from challenge generator
+    /// Initializes a new instance of <see cref="DefaultSCEPChallengeStore"/> from challenge generator
     /// and optional store size limit.
     /// </summary>
     /// <param name="challengeGenerator">SCEP challenge password implementation.</param>
@@ -36,7 +36,7 @@ public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
     /// <inheritdoc />
     /// <exception cref="ArgumentException">
     /// Supplied challenge password doesn't exist in internal store. Either, it was already released or never
-    /// generated using <seealso cref="GetNextChallenge"/> method call.
+    /// generated using <see cref="GetNextChallenge"/> method call.
     /// </exception>
     public void ReleaseChallenge(String challenge) {
         if (!_store.TryRemove(challenge, out _)) {
