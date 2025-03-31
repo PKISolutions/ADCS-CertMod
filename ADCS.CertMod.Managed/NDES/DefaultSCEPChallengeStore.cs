@@ -4,6 +4,14 @@ using System.Collections.Concurrent;
 
 namespace ADCS.CertMod.Managed.NDES;
 
+/// <summary>
+/// Represents a thread-safe default implementation of SCEP challenge password store/cache. Key properties are:
+/// <list type="bullet">
+///     <item>Can be limited in size. By default, cache size is unlimited.</item>
+///     <item>Transient. Erased when NDES application pool is recycled or stopped.</item>
+///     <item>Do not bind challenge password to template.</item>
+/// </list>
+/// </summary>
 public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
     readonly ConcurrentDictionary<String, SCEPChallengeStoreEntry> _store = [];
     readonly Int32 _storageLimit;
@@ -14,10 +22,10 @@ public class DefaultSCEPChallengeStore : ISCEPChallengeStore {
     /// and optional store size limit.
     /// </summary>
     /// <param name="challengeGenerator">SCEP challenge password implementation.</param>
-    /// <param name="StorageLimit">Optional SCEP challenge password limit. Default is 0, which means no limits.</param>
-    public DefaultSCEPChallengeStore(ISCEPChallengeGenerator challengeGenerator, Int32 StorageLimit = 0) {
+    /// <param name="storageLimit">Optional SCEP challenge password limit. Default is 0, which means no limits.</param>
+    public DefaultSCEPChallengeStore(ISCEPChallengeGenerator challengeGenerator, Int32 storageLimit = 0) {
         _challengeGenerator = challengeGenerator;
-        _storageLimit = StorageLimit;
+        _storageLimit = storageLimit;
     }
 
     /// <inheritdoc />
