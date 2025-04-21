@@ -61,6 +61,7 @@
     <Compile Include="CertServerModule.cs" />
     <Compile Include="AdcsCrlReason.cs" />
     <Compile Include="CertServerModulePool.cs" />
+    <Compile Include="CertServerModuleType.cs" />
     <Compile Include="Exit\CertServerExitManaged.cs" />
     <Compile Include="GeneralFlags.cs" />
     <Compile Include="EnrollmentFlags.cs" />
