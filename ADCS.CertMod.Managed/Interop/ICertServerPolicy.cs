@@ -7,7 +7,7 @@ namespace ADCS.CertMod.Managed.Interop;
 [Guid("aa000922-ffbe-11cf-8800-00a0c903b83c")] // from certif.h
 [TypeLibType(TypeLibTypeFlags.FDual | TypeLibTypeFlags.FDispatchable)]
 [ComImport]
-public interface ICertServerPolicy {
+interface ICertServerPolicy {
     [DispId(1610743808)]
     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
     void SetContext(

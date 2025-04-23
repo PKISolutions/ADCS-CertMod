@@ -7,7 +7,7 @@ namespace ADCS.CertMod.Managed.Interop;
 [Guid("4ba9eb90-732c-11d0-8816-00a0c903b83c")] // from certif.h
 [TypeLibType(TypeLibTypeFlags.FDual | TypeLibTypeFlags.FDispatchable)]
 [ComImport]
-public interface ICertServerExit {
+interface ICertServerExit {
     [DispId(1610743808)]
     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
     void SetContext(
