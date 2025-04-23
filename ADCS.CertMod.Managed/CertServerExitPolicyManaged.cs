@@ -55,14 +55,14 @@ abstract class CertServerExitPolicyManaged : ICertServerModule {
     public void SetContext(Int32 Context) {
         _setContext.Invoke(Context);
     }
-    public void GetRequestProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
-        _getRequestProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
+    public Int32 GetRequestProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
+        return _getRequestProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
     }
     public String GetRequestAttribute(String strAttributeName) {
         return _getRequestAttribute.Invoke(strAttributeName);
     }
-    public void GetCertificateProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
-        _getCertificateProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
+    public Int32 GetCertificateProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
+        return _getCertificateProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
     }
     public void GetCertificateExtension(String strExtensionName, Int32 Type, IntPtr pvarValue) {
         _getCertificateExtension.Invoke(strExtensionName, Type, pvarValue);
