@@ -5,7 +5,7 @@ namespace ADCS.CertMod.Managed.Extensions;
 
 static class CertServerModuleExtensions {
     #region private helpers
-
+    
     public static T GetInSubjectProperty<T>(this ICertServerModule certExit, IntPtr pvarPropertyValue, RequestSubjectName subjectName) {
         certExit.getScalarProperty(pvarPropertyValue, "Subject." + subjectName, out T retValue);
 
@@ -72,20 +72,17 @@ static class CertServerModuleExtensions {
             return false;
         }
 
-        try {
-            if (cert) {
-                certExit.GetCertificateProperty(propertyName, propType, pvarPropertyValue);
-            } else {
-                certExit.GetRequestProperty(propertyName, propType, pvarPropertyValue);
-            }
-                
-            retValue = (T)Marshal.GetObjectForNativeVariant(pvarPropertyValue);
-            OleAut32.VariantClear(pvarPropertyValue);
-
-            return true;
-        } catch {
+        Int32 hresult = cert
+            ? certExit.GetCertificateProperty(propertyName, propType, pvarPropertyValue)
+            : certExit.GetRequestProperty(propertyName, propType, pvarPropertyValue);
+        if (hresult != 0) {
             return false;
         }
+
+        retValue = (T)Marshal.GetObjectForNativeVariant(pvarPropertyValue);
+        OleAut32.VariantClear(pvarPropertyValue);
+
+        return true;
     }
     static Byte[] getBinaryProperty(this ICertServerModule certExit, IntPtr pvarPropertyValue, String propertyName, Boolean cert = false) {
         try {
