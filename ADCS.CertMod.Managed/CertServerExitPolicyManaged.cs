@@ -1,14 +1,14 @@
 ﻿using System;
-using CERTCLILib;
+using ADCS.CertMod.Managed.Interop;
 
 namespace ADCS.CertMod.Managed;
 
 abstract class CertServerExitPolicyManaged : ICertServerModule {
     readonly Action<Int32> _setContext;
-    readonly Func<String, Int32, IntPtr, Object> _getRequestProperty;
+    readonly Func<String, Int32, IntPtr, Int32> _getRequestProperty;
     readonly Func<String, String> _getRequestAttribute;
-    readonly Func<String, Int32, IntPtr, Object> _getCertificateProperty;
-    readonly Func<String, Int32, IntPtr, Object> _getCertificateExtension;
+    readonly Func<String, Int32, IntPtr, Int32> _getCertificateProperty;
+    readonly Func<String, Int32, IntPtr, Int32> _getCertificateExtension;
     readonly Func<Int32> _getCertificateExtensionFlags;
     readonly Action<Int32> _enumerateExtensionsSetup;
     readonly Func<String> _enumerateExtensions;
