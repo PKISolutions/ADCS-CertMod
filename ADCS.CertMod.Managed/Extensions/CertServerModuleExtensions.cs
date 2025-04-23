@@ -85,20 +85,18 @@ static class CertServerModuleExtensions {
         return true;
     }
     static Byte[] getBinaryProperty(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, Boolean cert = false) {
-        try {
-            if (cert) {
-                certServerModule.GetCertificateProperty(propertyName, CertSrvH.PROPTYPE_BINARY, pvarPropertyValue);
-            } else {
-                certServerModule.GetRequestProperty(propertyName, CertSrvH.PROPTYPE_BINARY, pvarPropertyValue);
-            }
-                
-            Byte[] retValue = pvarPropertyValue.GetBstrBinary(null);
-            OleAut32.VariantClear(pvarPropertyValue);
+        Int32 hresult = cert
+            ? certServerModule.GetCertificateProperty(propertyName, CertSrvH.PROPTYPE_BINARY, pvarPropertyValue)
+            : certServerModule.GetRequestProperty(propertyName, CertSrvH.PROPTYPE_BINARY, pvarPropertyValue);
 
-            return retValue;
-        } catch {
+        if (hresult != 0) {
             return default;
         }
+
+        Byte[] retValue = pvarPropertyValue.GetBstrBinary(null);
+        OleAut32.VariantClear(pvarPropertyValue);
+
+        return retValue;
     }
 
     #endregion
