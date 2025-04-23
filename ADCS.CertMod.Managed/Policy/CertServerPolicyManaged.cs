@@ -2,14 +2,14 @@
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using ADCS.CertMod.Managed.Extensions;
-using CERTCLILib;
+using ADCS.CertMod.Managed.Interop;
 
 namespace ADCS.CertMod.Managed.Policy;
 
 class CertServerPolicyManaged : CertServerExitPolicyManaged, ICertServerPolicyManaged {
     readonly ICertServerPolicy _certPolicy;
 
-    public CertServerPolicyManaged() : base(new CCertServerPolicyClass()) {
+    public CertServerPolicyManaged() : base(CertServerComFactory.CreateCertServerPolicy()) {
         _certPolicy = (ICertServerPolicy)Handler;
     }
 
