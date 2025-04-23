@@ -15,7 +15,6 @@ public interface ICertServerExit {
 
     [DispId(1610743809)]
     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-    [return: MarshalAs(UnmanagedType.Struct)]
     Int32 GetRequestProperty(
         [MarshalAs(UnmanagedType.BStr), In] String strPropertyName,
         [In] Int32 PropertyType,
