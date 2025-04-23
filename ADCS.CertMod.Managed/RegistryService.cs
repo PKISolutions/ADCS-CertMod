@@ -30,17 +30,17 @@ public abstract class RegistryService {
     /// </summary>
     /// <param name="moduleName">Module's COM ProgID.</param>
     /// <param name="moduleType">Module type.</param>
+    /// <exception cref="ArgumentNullException">Module name parameter is null.</exception>
     /// <exception cref="ArgumentException">CA name could not be determined.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Module type is not valid module type.</exception>
     protected RegistryService(String moduleName, CertServerModuleType moduleType) {
         String regPath;
         if (String.IsNullOrEmpty(moduleName)) {
-            throw new ArgumentException("Registry key base name cannot be empty.");
+            throw new ArgumentNullException(nameof(moduleName));
         }
         
         RegPath = String.Empty;
-
-        String moduleName1 = moduleName;
+        
         switch (moduleType) {
             case CertServerModuleType.Policy:
                 regPath = REG_CERTSRV_TEMPLATE.Replace("ExitModules", "PolicyModules");
@@ -61,18 +61,16 @@ public abstract class RegistryService {
                 if (GetRecord("Active", @"SYSTEM\CurrentControlSet\Services\CertSvc\Configuration")?.Value is not String activeCA) {
                     throw new ArgumentException("CA name could not be determined.");
                 }
-                RegPath = String.Format(regPath, activeCA, moduleName1);
+                RegPath = String.Format(regPath, activeCA, moduleName);
                 String baseKey = String.Format(regPath, activeCA, String.Empty);
                 if (!RegKeyExists(RegPath)) {
                     using RegistryKey? key = Registry.LocalMachine.OpenSubKey(baseKey, RegistryKeyPermissionCheck.ReadWriteSubTree);
-                    key?.CreateSubKey(moduleName1);
+                    key?.CreateSubKey(moduleName);
                 }
                 break;
             case CertServerModuleType.NDES:
                 RegPath = REG_NDES_TEMPLATE;
                 break;
-            default:
-                throw new ArgumentOutOfRangeException();
         }
     }
     /// <summary>
