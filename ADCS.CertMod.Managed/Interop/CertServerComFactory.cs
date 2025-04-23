@@ -6,7 +6,7 @@ namespace ADCS.CertMod.Managed.Interop;
 /// <summary>
 /// Represents CertServer* COM class factory.
 /// </summary>
-public static class CertServerComFactory {
+static class CertServerComFactory {
     /// <summary>
     /// Creates an instance of <strong>ICertServerExit</strong> COM interface.
     /// </summary>
