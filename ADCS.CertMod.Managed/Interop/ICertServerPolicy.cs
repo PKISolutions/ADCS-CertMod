@@ -15,6 +15,7 @@ public interface ICertServerPolicy {
 
     [DispId(1610743809)]
     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+    [PreserveSig] // force HRESULT instead of exception
     Int32 GetRequestProperty(
         [MarshalAs(UnmanagedType.BStr), In] String strPropertyName,
         [In] Int32 PropertyType,
@@ -28,6 +29,7 @@ public interface ICertServerPolicy {
 
     [DispId(1610743811)]
     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
+    [PreserveSig] // force HRESULT instead of exception
     Int32 GetCertificateProperty(
         [MarshalAs(UnmanagedType.BStr), In] String strPropertyName,
         [In] Int32 PropertyType,
