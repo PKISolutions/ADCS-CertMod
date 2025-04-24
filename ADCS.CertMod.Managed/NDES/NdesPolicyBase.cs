@@ -166,6 +166,10 @@ public abstract class NdesPolicyBase : INDESPolicy {
     /// <remarks>
     /// Implementers shall authenticate the request by comparing challenge password stored in request attributes
     /// (Challenge Password: 1.2.840.113549.1.9.7) against issued and not yet consumed challenge password cache.
+    /// <para>
+    /// <strong>Note:</strong> challenge password is included in initial requests only (when <strong>signingCertificate</strong>
+    /// parameter is <c>null</c>). Renewal requests do not contain challenge password, thus it MUST NOT be checked.
+    /// </para>
     /// <para>Implementers MUST NOT remove challenge password from cache in this method override.</para>
     /// </remarks>
     protected abstract Boolean OnVerifyRequest(Byte[]? pkcs10Request, Byte[]? signingCertificate, String template, String transactionID);
@@ -177,8 +181,15 @@ public abstract class NdesPolicyBase : INDESPolicy {
     /// <param name="issuedCertificate">The requested certificate, if issued.</param>
     /// <remarks>
     /// This method provides default implementation which calls <see cref="ISCEPChallengeStore.ReleaseChallenge"/>.
+    /// <para>
+    /// <strong>Note:</strong> challenge password is included in initial requests only. Renewal requests do not contain challenge password.
+    /// </para>
     /// </remarks>
-    protected virtual void OnNotify(String challenge, String transactionID, SCEPDisposition disposition, Int32 lastHResult, X509Certificate2? issuedCertificate) {
+    protected virtual void OnNotify(String? challenge, String transactionID, SCEPDisposition disposition, Int32 lastHResult, X509Certificate2? issuedCertificate) {
+        if (challenge is null) {
+            return;
+        }
+        
         ChallengeStore.ReleaseChallenge(challenge);
     }
 
