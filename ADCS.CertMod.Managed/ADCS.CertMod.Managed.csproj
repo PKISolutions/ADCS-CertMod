@@ -44,11 +44,6 @@
     <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CERTCLILib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d5db31a0b7668d81, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <HintPath>..\lib\CERTCLILib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Security" />
@@ -75,6 +70,9 @@
     <Compile Include="NDES\SCEPChallengeStoreEntry.cs" />
     <Compile Include="NDES\SCEPDisposition.cs" />
     <Compile Include="NDES\SCEPFailInfo.cs" />
+    <Compile Include="Interop\CertServerComFactory.cs" />
+    <Compile Include="Interop\ICertServerExit.cs" />
+    <Compile Include="Interop\ICertServerPolicy.cs" />
     <Compile Include="ObjectPool.cs" />
     <Compile Include="Policy\CertServerPolicyManaged.cs" />
     <Compile Include="PrivateKeyFlags.cs" />
@@ -115,5 +113,6 @@
   <ItemGroup>
     <None Include="strongname.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

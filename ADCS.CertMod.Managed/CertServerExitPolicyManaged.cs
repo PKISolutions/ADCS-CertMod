@@ -1,14 +1,14 @@
 ﻿using System;
-using CERTCLILib;
+using ADCS.CertMod.Managed.Interop;
 
 namespace ADCS.CertMod.Managed;
 
 abstract class CertServerExitPolicyManaged : ICertServerModule {
     readonly Action<Int32> _setContext;
-    readonly Func<String, Int32, IntPtr, Object> _getRequestProperty;
+    readonly Func<String, Int32, IntPtr, Int32> _getRequestProperty;
     readonly Func<String, String> _getRequestAttribute;
-    readonly Func<String, Int32, IntPtr, Object> _getCertificateProperty;
-    readonly Func<String, Int32, IntPtr, Object> _getCertificateExtension;
+    readonly Func<String, Int32, IntPtr, Int32> _getCertificateProperty;
+    readonly Func<String, Int32, IntPtr, Int32> _getCertificateExtension;
     readonly Func<Int32> _getCertificateExtensionFlags;
     readonly Action<Int32> _enumerateExtensionsSetup;
     readonly Func<String> _enumerateExtensions;
@@ -55,14 +55,14 @@ abstract class CertServerExitPolicyManaged : ICertServerModule {
     public void SetContext(Int32 Context) {
         _setContext.Invoke(Context);
     }
-    public void GetRequestProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
-        _getRequestProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
+    public Int32 GetRequestProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
+        return _getRequestProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
     }
     public String GetRequestAttribute(String strAttributeName) {
         return _getRequestAttribute.Invoke(strAttributeName);
     }
-    public void GetCertificateProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
-        _getCertificateProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
+    public Int32 GetCertificateProperty(String strPropertyName, Int32 PropertyType, IntPtr pvarPropertyValue) {
+        return _getCertificateProperty.Invoke(strPropertyName, PropertyType, pvarPropertyValue);
     }
     public void GetCertificateExtension(String strExtensionName, Int32 Type, IntPtr pvarValue) {
         _getCertificateExtension.Invoke(strExtensionName, Type, pvarValue);
