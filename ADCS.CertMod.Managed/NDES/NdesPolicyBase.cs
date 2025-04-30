@@ -58,8 +58,12 @@ public abstract class NdesPolicyBase : INDESPolicy {
 
         Byte[]? reqBytes = getBytes(pctbRequest);
         Byte[]? certBytes = getBytes(pctbSigningCertEncoded);
+        X509Certificate2? signingCert = null;
+        if (certBytes is not null) {
+            signingCert = new X509Certificate2(certBytes);
+        }
 
-        return OnVerifyRequest(reqBytes, certBytes, pwszTemplate, pwszTransactionId);
+        return OnVerifyRequest(reqBytes, signingCert, pwszTemplate, pwszTransactionId);
     }
     /// <inheritdoc />
     public void Notify(
@@ -172,7 +176,7 @@ public abstract class NdesPolicyBase : INDESPolicy {
     /// </para>
     /// <para>Implementers MUST NOT remove challenge password from cache in this method override.</para>
     /// </remarks>
-    protected abstract Boolean OnVerifyRequest(Byte[]? pkcs10Request, Byte[]? signingCertificate, String template, String transactionID);
+    protected abstract Boolean OnVerifyRequest(Byte[]? pkcs10Request, X509Certificate2? signingCertificate, String template, String transactionID);
     /// <inheritdoc cref="INDESPolicy.Notify" section="summary"/>
     /// <param name="challenge">The authentication and authorization SCEP challenge password for the user.</param>
     /// <param name="transactionID">The SCEP request transaction ID.</param>
