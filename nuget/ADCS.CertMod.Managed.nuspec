@@ -10,7 +10,7 @@
         <projectUrl>https://github.com/PKISolutions/ADCS-CertMod</projectUrl>
         <description>Base framework to build ADCS Certification Authority and NDES policy and exit modules</description>
         <releaseNotes>Initial release.</releaseNotes>
-        <copyright>© PKI Solutions Inc., 2022-$year$</copyright>
+        <copyright>© PKI Solutions LLC, 2022-$year$</copyright>
         <tags>PKI ADCS CertificateServices SCEP NDES</tags>
         <dependencies>
             <group targetFramework="net472"/>
