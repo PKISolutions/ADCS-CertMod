@@ -11,6 +11,11 @@ namespace ADCS.CertMod.Managed.NDES;
 public abstract class NdesPolicyBase : INDESPolicy {
     readonly String _policyClassName;
 
+    /// <summary>
+    /// Initializes a new instance of <strong>NdesPolicyBase</strong> from log writer and SCEP challenge password store implementation.
+    /// </summary>
+    /// <param name="logWriter">Log writer.</param>
+    /// <param name="challengeStore">SCEP challenge password store implementation.</param>
     protected NdesPolicyBase(ILogWriter logWriter, ISCEPChallengeStore challengeStore) {
         _policyClassName = GetType().Name;
         Logger = logWriter;
