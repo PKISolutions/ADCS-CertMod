@@ -11,9 +11,9 @@ public abstract class CertPolicyBase : ICertPolicy2 {
 
     readonly CertServerModulePool _pool;
 
-    Action funcShutdown;
-    Action<String> funcInitialize;
-    Func<String, Int32, Int32, Int32, PolicyModuleAction> funcVerifyRequest;
+    Action? funcShutdown;
+    Action<String>? funcInitialize;
+    Func<String, Int32, Int32, Int32, PolicyModuleAction>? funcVerifyRequest;
 
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
@@ -44,7 +44,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// set when non-standard (like FIM CM) is used and you wish to use custom policy module along with
     /// this policy module.
     /// </summary>
-    protected String DefaultPolicyProgID { get; set; }
+    protected String? DefaultPolicyProgID { get; set; }
     /// <summary>
     /// Gets the current stream logger.
     /// </summary>
@@ -54,14 +54,14 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// Use provided instance in <see cref="VerifyRequest(CertServerModule, PolicyModuleAction, Boolean)"/> overload.
     /// </summary>
     [Obsolete("This member is not thread-safe. Use provided instance in 'VerifyRequest(CertServerModule, PolicyModuleAction, Boolean)' overload.", true)]
-    protected CertServerModule CertServer { get; }
+    protected CertServerModule? CertServer { get; }
 
     /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
     public PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
         CertServerModule certServer = _pool.GetNext();
         certServer.InitializeContext(Context);
 
-        PolicyModuleAction nativeResult = funcVerifyRequest.Invoke(strConfig, Context, bNewRequest, Flags);
+        PolicyModuleAction nativeResult = funcVerifyRequest!.Invoke(strConfig, Context, bNewRequest, Flags);
         try {
             return VerifyRequest(certServer, nativeResult, bNewRequest > 0);
         } finally {
@@ -88,7 +88,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
         } else {
             nativePolicyModuleType = Type.GetTypeFromProgID(DefaultPolicyProgID, false);
             if (nativePolicyModuleType == null) {
-                Logger.LogError("[CertPolicyBase::Initialize] Unable to discover native policy module with ProgID: {0}", DefaultPolicyProgID);
+                Logger.LogError("[CertPolicyBase::Initialize] Unable to discover native policy module with ProgID: {0}", nativePolicyModuleName);
                 // fallback to Windows Default policy module.
                 nativePolicyModuleType = Type.GetTypeFromProgID(WINDOWS_POLICY_DEFAULT, false);
                 if (nativePolicyModuleType == null) {
@@ -132,7 +132,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     }
     /// <inheritdoc cref="ICertPolicy2.ShutDown" />
     public virtual void ShutDown() {
-        funcShutdown.Invoke();
+        funcShutdown!.Invoke();
     }
     /// <inheritdoc cref="ICertPolicy.GetDescription"/>
     public abstract String GetDescription();

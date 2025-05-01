@@ -6,58 +6,58 @@ namespace ADCS.CertMod.Managed.Extensions;
 static class CertServerModuleExtensions {
     #region private helpers
     
-    public static T GetInSubjectProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName subjectName) {
-        certServerModule.getScalarProperty(pvarPropertyValue, "Subject." + subjectName, out T retValue);
+    public static T? GetInSubjectProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName subjectName) {
+        certServerModule.getScalarProperty(pvarPropertyValue, "Subject." + subjectName, out T? retValue);
 
         return retValue;
     }
-    public static T GetOutSubjectProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName subjectName) {
-        certServerModule.getScalarProperty(pvarPropertyValue, subjectName.ToString(), out T retValue);
+    public static T? GetOutSubjectProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName subjectName) {
+        certServerModule.getScalarProperty(pvarPropertyValue, subjectName.ToString(), out T? retValue);
 
         return retValue;
     }
 
-    public static Byte[] GetInSubjectNameBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName propertyName) {
+    public static Byte[]? GetInSubjectNameBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName propertyName) {
         return certServerModule.getBinaryProperty(pvarPropertyValue, "Subject." + propertyName);
     }
-    public static Byte[] GetOutSubjectNameBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName propertyName) {
+    public static Byte[]? GetOutSubjectNameBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestSubjectName propertyName) {
         return certServerModule.getBinaryProperty(pvarPropertyValue, propertyName.ToString());
     }
 
-    public static T GetRequestProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestPropertyName propertyName) {
-        certServerModule.getScalarProperty(pvarPropertyValue, propertyName.ToString(), out T retValue);
+    public static T? GetRequestProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestPropertyName propertyName) {
+        certServerModule.getScalarProperty(pvarPropertyValue, propertyName.ToString(), out T? retValue);
 
         return retValue;
     }
-    public static Byte[] GetRequestPropertyBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestPropertyName propertyName) {
+    public static Byte[]? GetRequestPropertyBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, RequestPropertyName propertyName) {
         return certServerModule.getBinaryProperty(pvarPropertyValue, propertyName.ToString());
     }
 
-    public static T GetCertProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, CertificatePropertyName propertyName) {
-        certServerModule.getScalarProperty(pvarPropertyValue, propertyName.ToString(), out T retValue, true);
+    public static T? GetCertProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, CertificatePropertyName propertyName) {
+        certServerModule.getScalarProperty(pvarPropertyValue, propertyName.ToString(), out T? retValue, true);
 
         return retValue;
     }
-    public static Byte[] GetCertPropertyBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, CertificatePropertyName propertyName) {
+    public static Byte[]? GetCertPropertyBin(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, CertificatePropertyName propertyName) {
         return certServerModule.getBinaryProperty(pvarPropertyValue, propertyName.ToString(), true);
     }
 
     public static Int32? GetLongProperty(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, Boolean cert = false) {
-        if (certServerModule.getScalarProperty(pvarPropertyValue, propertyName, out Int32 retValue, cert)) {
+        if (certServerModule.getScalarProperty(pvarPropertyValue, propertyName, out Int32? retValue, cert)) {
             return retValue;
         }
 
         return null;
     }
     public static DateTime? GetDateTimeProperty(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, Boolean cert = false) {
-        if (certServerModule.getScalarProperty(pvarPropertyValue, propertyName, out DateTime retValue, cert)) {
+        if (certServerModule.getScalarProperty(pvarPropertyValue, propertyName, out DateTime? retValue, cert)) {
             return retValue;
         }
 
         return null;
     }
 
-    static Boolean getScalarProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, out T retValue, Boolean cert = false) {
+    static Boolean getScalarProperty<T>(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, out T? retValue, Boolean cert = false) {
         retValue = default;
         Type leftType = typeof(T);
         Int32 propType;
@@ -84,7 +84,7 @@ static class CertServerModuleExtensions {
 
         return true;
     }
-    static Byte[] getBinaryProperty(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, Boolean cert = false) {
+    static Byte[]? getBinaryProperty(this ICertServerModule certServerModule, IntPtr pvarPropertyValue, String propertyName, Boolean cert = false) {
         Int32 hresult = cert
             ? certServerModule.GetCertificateProperty(propertyName, CertSrvH.PROPTYPE_BINARY, pvarPropertyValue)
             : certServerModule.GetRequestProperty(propertyName, CertSrvH.PROPTYPE_BINARY, pvarPropertyValue);
@@ -93,7 +93,7 @@ static class CertServerModuleExtensions {
             return default;
         }
 
-        Byte[] retValue = pvarPropertyValue.GetBstrBinary(null);
+        Byte[]? retValue = pvarPropertyValue.GetBstrBinary();
         OleAut32.VariantClear(pvarPropertyValue);
 
         return retValue;

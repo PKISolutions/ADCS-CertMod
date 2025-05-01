@@ -61,7 +61,7 @@ abstract class ObjectPool<T> where T : class {
             }
         }
 
-        return result;
+        return result!;
     }
     /// <summary>
     /// Returns object to pool.

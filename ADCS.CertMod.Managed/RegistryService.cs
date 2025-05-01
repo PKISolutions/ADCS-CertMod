@@ -180,8 +180,8 @@ public abstract class RegistryService {
     /// Gets all records from the current module's configuration storage.
     /// </summary>
     /// <param name="path">Additional path below module's configuration storage.</param>
-    /// <returns>A collection of registry entries.</returns>
-    protected IEnumerable<RegTriplet> GetRecords(String? path = null) {
+    /// <returns>A collection of registry entries. <c>nulll</c> if registry key doesn't exist.</returns>
+    protected IEnumerable<RegTriplet>? GetRecords(String? path = null) {
         if (String.IsNullOrWhiteSpace(path)) {
             path = RegPath;
         }
@@ -191,7 +191,7 @@ public abstract class RegistryService {
         if (key is not null) {
             String[] valueNames = key.GetValueNames();
             if (valueNames.Length == 0) {
-                return null;
+                return [];
             }
             values.AddRange(valueNames.Select(val => new RegTriplet(val, key.GetValueKind(val)) { Value = key.GetValue(val) }));
             return values;

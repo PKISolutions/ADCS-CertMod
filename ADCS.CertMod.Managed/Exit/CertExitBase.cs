@@ -42,7 +42,7 @@ public abstract class CertExitBase : ICertExit2 {
     /// Use provided instance in <see cref="Notify(CertServerModule, ExitEvents, Int32)"/> overload.
     /// </summary>
     [Obsolete("This member is not thread-safe. Use provided instance in 'Notify(CertServerModule, ExitEvents, Int32)' overload.", true)]
-    protected CertServerModule CertServer { get; }
+    protected CertServerModule? CertServer { get; }
 
     /// <inheritdoc cref="ICertExit.Initialize" />
     public abstract ExitEvents Initialize(String strConfig);

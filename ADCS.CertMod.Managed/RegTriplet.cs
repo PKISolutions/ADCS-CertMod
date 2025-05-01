@@ -69,7 +69,7 @@ public class RegTriplet {
     /// <summary>
     /// Gets or sets the registry value data.
     /// </summary>
-    public Object Value { get; set; }
+    public Object? Value { get; set; }
     /// <summary>
     /// Gets registry value type.
     /// </summary>

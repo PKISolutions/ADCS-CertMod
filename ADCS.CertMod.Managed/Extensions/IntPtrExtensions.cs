@@ -5,7 +5,7 @@ namespace ADCS.CertMod.Managed.Extensions;
 
 static class IntPtrExtensions {
     // adapted version of: https://www.sysadmins.lv/retired-msft-blogs/alejacma/how-to-modify-an-interop-assembly-to-change-the-return-type-of-a-method-vbnet.aspx
-    public static Byte[] GetBstrBinary(this IntPtr pvarPropertyValue, ILogWriter logger) {
+    public static Byte[]? GetBstrBinary(this IntPtr pvarPropertyValue) {
         OleAut32.VARIANT variant = Marshal.PtrToStructure<OleAut32.VARIANT>(pvarPropertyValue);
         if (variant.vt != OleAut32.VT_BSTR || IntPtr.Zero.Equals(variant.pvRecord)) {
             return default;

@@ -13,7 +13,7 @@ public class AppConfigEntry {
     /// <param name="name">App config entry name.</param>
     /// <param name="value">App config value.</param>
     /// <param name="type">App config CLR type.</param>
-    public AppConfigEntry(String name, Object value, Type type = null) {
+    public AppConfigEntry(String name, Object value, Type type) {
         Name = name;
         Value = value;
         ValueType = type;
@@ -21,11 +21,11 @@ public class AppConfigEntry {
     /// <summary>
     /// Gets or sets the configuration entry name.
     /// </summary>
-    public String Name { get; set; }
+    public String Name { get; }
     /// <summary>
     /// Gets or sets the CLR type of configuration entry value.
     /// </summary>
-    public Type ValueType { get; set; }
+    public Type ValueType { get; }
     /// <summary>
     /// Gets or sets the configuration entry value.
     /// </summary>

@@ -143,7 +143,7 @@ public class CertServerModule {
         while (_certServerModule.EnumerateExtensions() is { } extensionName) {
             _certServerModule.GetCertificateExtension(extensionName, CertSrvH.PROPTYPE_BINARY, pvarValue);
             RequestExtensionFlags flags = _certServerModule.GetCertificateExtensionFlags();
-            retValue.Add(new RequestExtension(RequestID, extensionName, flags, pvarValue.GetBstrBinary(_logger)));
+            retValue.Add(new RequestExtension(RequestID, extensionName, flags, pvarValue.GetBstrBinary()!));
             OleAut32.VariantClear(pvarValue);
         }
         _certServerModule.EnumerateExtensionsClose();
@@ -202,8 +202,8 @@ public class CertServerModule {
         return retValue;
     }
 
-    IDictionary<String, Object> getInProperties() {
-        var retValue = new Dictionary<String, Object>();
+    IDictionary<String, Object?> getInProperties() {
+        var retValue = new Dictionary<String, Object?>();
 
         // In-properties
         retValue.Add("Request_" + nameof(RequestPropertyName.RequestID), GetRequestID());
@@ -236,8 +236,8 @@ public class CertServerModule {
 
         return retValue;
     }
-    IDictionary<String, Object> getInNames() {
-        var retValue = new Dictionary<String, Object>();
+    IDictionary<String, Object?> getInNames() {
+        var retValue = new Dictionary<String, Object?>();
 
         // In-names
         retValue.Add("Request_" + nameof(RequestSubjectName.DistinguishedName), GetInDistinguishedName());
@@ -261,8 +261,8 @@ public class CertServerModule {
 
         return retValue;
     }
-    IDictionary<String, Object> getOutProperties(Boolean partial) {
-        var retValue = new Dictionary<String, Object>();
+    IDictionary<String, Object?> getOutProperties(Boolean partial) {
+        var retValue = new Dictionary<String, Object?>();
 
         // Out-properties
         if (partial) {
@@ -289,8 +289,8 @@ public class CertServerModule {
 
         return retValue;
     }
-    IDictionary<String, Object> getOutNames() {
-        var retValue = new Dictionary<String, Object>();
+    IDictionary<String, Object?> getOutNames() {
+        var retValue = new Dictionary<String, Object?>();
 
         // Out-names
         retValue.Add(nameof(RequestSubjectName.DistinguishedName), GetOutDistinguishedName());
@@ -329,21 +329,21 @@ public class CertServerModule {
     /// Returns binary request.
     /// </summary>
     /// <returns>Binary request.</returns>
-    public Byte[] GetRawRequest() {
+    public Byte[]? GetRawRequest() {
         return _certServerModule.GetRequestPropertyBin(pvarPropertyValue, RequestPropertyName.RawRequest);
     }
     /// <summary>
     /// Returns binary archived key.
     /// </summary>
     /// <returns>Binary archived key.</returns>
-    public Byte[] GetRawArchivedKey() {
+    public Byte[]? GetRawArchivedKey() {
         return _certServerModule.GetRequestPropertyBin(pvarPropertyValue, RequestPropertyName.RawArchivedKey);
     }
     /// <summary>
     /// Returns new line-delimited string of key recovery agent (KRA) certificate hashes.
     /// </summary>
     /// <returns>A string of hashes.</returns>
-    public String GetRawKeyRecoveryHashes() {
+    public String? GetRawKeyRecoveryHashes() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.KeyRecoveryHashes);
     }
     /// <summary>
@@ -351,24 +351,25 @@ public class CertServerModule {
     /// </summary>
     /// <returns>An array of hashes.</returns>
     public String[] GetKeyRecoveryHashes() {
-        String hashes = _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.KeyRecoveryHashes);
+        String? hashes = _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.KeyRecoveryHashes);
         if (!String.IsNullOrWhiteSpace(hashes)) {
-            return hashes.Split(new Char['\n'], StringSplitOptions.RemoveEmptyEntries);
+            return hashes!.Split(new Char['\n'], StringSplitOptions.RemoveEmptyEntries);
         }
-        return Array.Empty<String>();
+        
+        return [];
     }
     /// <summary>
     /// Returns renewal certificate.
     /// </summary>
     /// <returns>Renewal certificate.</returns>
-    public Byte[] GetRawOldCertificate() {
+    public Byte[]? GetRawOldCertificate() {
         return _certServerModule.GetRequestPropertyBin(pvarPropertyValue, RequestPropertyName.RawOldCertificate);
     }
     /// <summary>
     /// Returns raw request attributes as new line-delimited array of name-value pairs.
     /// </summary>
     /// <returns>Raw request attributes.</returns>
-    public String GetRawRequestAttributes() {
+    public String? GetRawRequestAttributes() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.RequestAttributes);
     }
     /// <summary>
@@ -403,7 +404,7 @@ public class CertServerModule {
     /// Returns disposition status message.
     /// </summary>
     /// <returns>Disposition status message.</returns>
-    public String GetDispositionMessage() {
+    public String? GetDispositionMessage() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.DispositionMessage);
     }
     /// <summary>
@@ -445,35 +446,35 @@ public class CertServerModule {
     /// Returns requester name.
     /// </summary>
     /// <returns>Requester name.</returns>
-    public String GetRequesterName() {
+    public String? GetRequesterName() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.RequesterName);
     }
     /// <summary>
     /// Returns caller name.
     /// </summary>
     /// <returns>Caller name.</returns>
-    public String GetCallerName() {
+    public String? GetCallerName() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.CallerName);
     }
     /// <summary>
     /// Returns a new line-delimited array of request co-signing certificate policies.
     /// </summary>
     /// <returns>Co-signing certificate policies.</returns>
-    public String GetSignerPolicies() {
+    public String? GetSignerPolicies() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.SignerPolicies);
     }
     /// <summary>
     /// Returns a new line-delimited array of request co-signing application policies.
     /// </summary>
     /// <returns>Co-signing application policies.</returns>
-    public String GetSignerApplicationPolicies() {
+    public String? GetSignerApplicationPolicies() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.SignerApplicationPolicies);
     }
     /// <summary>
     /// Returns officer name who resolved request.
     /// </summary>
     /// <returns>Officer name.</returns>
-    public String GetOfficer() {
+    public String? GetOfficer() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.Officer);
     }
     /// <summary>
@@ -492,21 +493,21 @@ public class CertServerModule {
     /// Returns binary attestation challenge.
     /// </summary>
     /// <returns>Attestation challenge.</returns>
-    public Byte[] GetAttestationChallenge() {
+    public Byte[]? GetAttestationChallenge() {
         return _certServerModule.GetRequestPropertyBin(pvarPropertyValue, RequestPropertyName.AttestationChallenge);
     }
     /// <summary>
     /// Returns endorsement key hash.
     /// </summary>
     /// <returns>Endorsement key hash.</returns>
-    public String GetEndorsementKeyHash() {
+    public String? GetEndorsementKeyHash() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.EndorsementKeyHash);
     }
     /// <summary>
     /// Returns endorsement certificate hash.
     /// </summary>
     /// <returns>Endorsement certificate hash.</returns>
-    public String GetEndorsementCertificateHash() {
+    public String? GetEndorsementCertificateHash() {
         return _certServerModule.GetRequestProperty<String>(pvarPropertyValue, RequestPropertyName.EndorsementCertificateHash);
     }
 
@@ -517,126 +518,126 @@ public class CertServerModule {
     /// Returns requested X.500 distinguished name.
     /// </summary>
     /// <returns>Distinguished name.</returns>
-    public String GetInDistinguishedName() {
+    public String? GetInDistinguishedName() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.DistinguishedName);
     }
     /// <summary>
     /// Returns requested ASN.1-encoded X.500 distinguished name.
     /// </summary>
     /// <returns>Encoded distinguished name.</returns>
-    public Byte[] GetInRawName() {
+    public Byte[]? GetInRawName() {
         return _certServerModule.GetInSubjectNameBin(pvarPropertyValue, RequestSubjectName.RawName);
     }
     /// <summary>
     /// Returns requested Country RDN attribute.
     /// </summary>
     /// <returns>Country attribute.</returns>
-    public String GetInCountry() {
+    public String? GetInCountry() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Country);
     }
     /// <summary>
     /// Returns requested Organization RDN attribute.
     /// </summary>
     /// <returns>Organization attribute.</returns>
-    public String GetInOrganization() {
+    public String? GetInOrganization() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Organization);
     }
     /// <summary>
     /// Returns requested organizational unit RDN attribute.
     /// </summary>
     /// <returns>OU attribute.</returns>
-    public String GetInOrgUnit() {
+    public String? GetInOrgUnit() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.OrgUnit);
     }
     /// <summary>
     /// Returns requested common name RDN attribute.
     /// </summary>
     /// <returns>CN attribute.</returns>
-    public String GetInCommonName() {
+    public String? GetInCommonName() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.CommonName);
     }
     /// <summary>
     /// Returns requested locality RDN attribute.
     /// </summary>
     /// <returns>Locality attribute.</returns>
-    public String GetInLocality() {
+    public String? GetInLocality() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Locality);
     }
     /// <summary>
     /// Returns requested StateOrProvince RDN attribute.
     /// </summary>
     /// <returns>StateOrProvince attribute.</returns>
-    public String GetInState() {
+    public String? GetInState() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.State);
     }
     /// <summary>
     /// Returns requested Title RDN attribute.
     /// </summary>
     /// <returns>Title attribute.</returns>
-    public String GetInTitle() {
+    public String? GetInTitle() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Title);
     }
     /// <summary>
     /// Returns requested GivenName RDN attribute.
     /// </summary>
     /// <returns>Given name attribute.</returns>
-    public String GetInGivenName() {
+    public String? GetInGivenName() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.GivenName);
     }
     /// <summary>
     /// Returns requested Initials RDN attribute.
     /// </summary>
     /// <returns>Initials attribute.</returns>
-    public String GetInInitials() {
+    public String? GetInInitials() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Initials);
     }
     /// <summary>
     /// Returns requested Surname RDN attribute.
     /// </summary>
     /// <returns>Surname attribute.</returns>
-    public String GetInSurName() {
+    public String? GetInSurName() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.SurName);
     }
     /// <summary>
     /// Returns requested domain component RDN attribute.
     /// </summary>
     /// <returns>DC attribute.</returns>
-    public String GetInDomainComponent() {
+    public String? GetInDomainComponent() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.DomainComponent);
     }
     /// <summary>
     /// Returns requested Email RDN attribute.
     /// </summary>
     /// <returns>Email attribute.</returns>
-    public String GetInEMail() {
+    public String? GetInEMail() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.EMail);
     }
     /// <summary>
     /// Returns requested Street RDN attribute.
     /// </summary>
     /// <returns>Street attribute.</returns>
-    public String GetInStreetAddress() {
+    public String? GetInStreetAddress() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.StreetAddress);
     }
     /// <summary>
     /// Returns requested unstructured name RDN attribute.
     /// </summary>
     /// <returns>Unstructured name attribute.</returns>
-    public String GetInUnstructuredName() {
+    public String? GetInUnstructuredName() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.UnstructuredName);
     }
     /// <summary>
     /// Returns requested unstructured address RDN attribute.
     /// </summary>
     /// <returns>Unstructured address attribute.</returns>
-    public String GetInUnstructuredAddress() {
+    public String? GetInUnstructuredAddress() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.UnstructuredAddress);
     }
     /// <summary>
     /// Returns requested device serial number RDN attribute.
     /// </summary>
     /// <returns>Device serial number attribute.</returns>
-    public String GetInDeviceSerialNumber() {
+    public String? GetInDeviceSerialNumber() {
         return _certServerModule.GetInSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.DeviceSerialNumber);
     }
 
@@ -647,126 +648,126 @@ public class CertServerModule {
     /// Returns issued X.500 distinguished name.
     /// </summary>
     /// <returns>Distinguished name.</returns>
-    public String GetOutDistinguishedName() {
+    public String? GetOutDistinguishedName() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.DistinguishedName);
     }
     /// <summary>
     /// Returns issued ASN.1-encoded X.500 distinguished name.
     /// </summary>
     /// <returns>Encoded distinguished name.</returns>
-    public Byte[] GetOutRawName() {
+    public Byte[]? GetOutRawName() {
         return _certServerModule.GetOutSubjectNameBin(pvarPropertyValue, RequestSubjectName.DistinguishedName);
     }
     /// <summary>
     /// Returns issued Country RDN attribute.
     /// </summary>
     /// <returns>Country attribute.</returns>
-    public String GetOutCountry() {
+    public String? GetOutCountry() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Country);
     }
     /// <summary>
     /// Returns issued Organization RDN attribute.
     /// </summary>
     /// <returns>Organization attribute.</returns>
-    public String GetOutOrganization() {
+    public String? GetOutOrganization() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Organization);
     }
     /// <summary>
     /// Returns issued organizational unit RDN attribute.
     /// </summary>
     /// <returns>OU attribute.</returns>
-    public String GetOutOrgUnit() {
+    public String? GetOutOrgUnit() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.OrgUnit);
     }
     /// <summary>
     /// Returns issued common name RDN attribute.
     /// </summary>
     /// <returns>CN attribute.</returns>
-    public String GetOutCommonName() {
+    public String? GetOutCommonName() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.CommonName);
     }
     /// <summary>
     /// Returns issued locality RDN attribute.
     /// </summary>
     /// <returns>Locality attribute.</returns>
-    public String GetOutLocality() {
+    public String? GetOutLocality() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Locality);
     }
     /// <summary>
     /// Returns issued StateOrProvince RDN attribute.
     /// </summary>
     /// <returns>StateOrProvince attribute.</returns>
-    public String GetOutState() {
+    public String? GetOutState() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.State);
     }
     /// <summary>
     /// Returns issued Title RDN attribute.
     /// </summary>
     /// <returns>Title attribute.</returns>
-    public String GetOutTitle() {
+    public String? GetOutTitle() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Title);
     }
     /// <summary>
     /// Returns issued GivenName RDN attribute.
     /// </summary>
     /// <returns>Given name attribute.</returns>
-    public String GetOutGivenName() {
+    public String? GetOutGivenName() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.GivenName);
     }
     /// <summary>
     /// Returns issued Initials RDN attribute.
     /// </summary>
     /// <returns>Initials attribute.</returns>
-    public String GetOutInitials() {
+    public String? GetOutInitials() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.Initials);
     }
     /// <summary>
     /// Returns issued Surname RDN attribute.
     /// </summary>
     /// <returns>Surname attribute.</returns>
-    public String GetOutSurName() {
+    public String? GetOutSurName() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.SurName);
     }
     /// <summary>
     /// Returns issued domain component RDN attribute.
     /// </summary>
     /// <returns>DC attribute.</returns>
-    public String GetOutDomainComponent() {
+    public String? GetOutDomainComponent() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.DomainComponent);
     }
     /// <summary>
     /// Returns issued Email RDN attribute.
     /// </summary>
     /// <returns>Email attribute.</returns>
-    public String GetOutEMail() {
+    public String? GetOutEMail() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.EMail);
     }
     /// <summary>
     /// Returns issued Street RDN attribute.
     /// </summary>
     /// <returns>Street attribute.</returns>
-    public String GetOutStreetAddress() {
+    public String? GetOutStreetAddress() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.StreetAddress);
     }
     /// <summary>
     /// Returns issued unstructured name RDN attribute.
     /// </summary>
     /// <returns>Unstructured name attribute.</returns>
-    public String GetOutUnstructuredName() {
+    public String? GetOutUnstructuredName() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.UnstructuredName);
     }
     /// <summary>
     /// Returns issued unstructured address RDN attribute.
     /// </summary>
     /// <returns>Unstructured address attribute.</returns>
-    public String GetOutUnstructuredAddress() {
+    public String? GetOutUnstructuredAddress() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.UnstructuredAddress);
     }
     /// <summary>
     /// Returns issued device serial number RDN attribute.
     /// </summary>
     /// <returns>Device serial number attribute.</returns>
-    public String GetOutDeviceSerialNumber() {
+    public String? GetOutDeviceSerialNumber() {
         return _certServerModule.GetOutSubjectProperty<String>(pvarPropertyValue, RequestSubjectName.DeviceSerialNumber);
     }
 
@@ -777,105 +778,120 @@ public class CertServerModule {
     /// Returns ASN.1-encoded issued certificate.
     /// </summary>
     /// <returns>Issued certificate.</returns>
-    public Byte[] GetRawCertificate() {
+    public Byte[]? GetRawCertificate() {
         return _certServerModule.GetCertPropertyBin(pvarPropertyValue, CertificatePropertyName.RawCertificate);
     }
     /// <summary>
     /// Returns issued certificate's SHA1 hash.
     /// </summary>
     /// <returns>Certificate thumbprint.</returns>
-    public String GetCertificateHash() {
+    public String? GetCertificateHash() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.CertificateHash);
     }
     /// <summary>
     /// Returns certificate template name or object identifier (OID).
     /// </summary>
     /// <returns>Certificate template name or OID.</returns>
-    public String GetCertificateTemplate() {
+    public String? GetCertificateTemplate() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.CertificateTemplate);
     }
     /// <summary>
     /// Returns enrollment flags.
     /// </summary>
     /// <returns>Enrollment flags.</returns>
-    public EnrollmentFlags? GetEnrollmentFlags() {
-        return (EnrollmentFlags?)_certServerModule.GetLongProperty(pvarPropertyValue, CertificatePropertyName.EnrollmentFlags.ToString(), true);
+    public EnrollmentFlags GetEnrollmentFlags() {
+        Int32? flags = _certServerModule.GetLongProperty(pvarPropertyValue, CertificatePropertyName.EnrollmentFlags.ToString(), true);
+        if (flags.HasValue) {
+            return (EnrollmentFlags)flags.Value;
+        }
+
+        return default;
     }
     /// <summary>
     /// Returns request general flags.
     /// </summary>
     /// <returns>General flags.</returns>
-    public GeneralFlags? GetGeneralFlags() {
-        return (GeneralFlags?)_certServerModule.GetLongProperty(pvarPropertyValue, CertificatePropertyName.GeneralFlags.ToString(), true);
+    public GeneralFlags GetGeneralFlags() {
+        Int32? flags = _certServerModule.GetLongProperty(pvarPropertyValue, CertificatePropertyName.GeneralFlags.ToString(), true);
+        if (flags.HasValue) {
+            return (GeneralFlags)flags.Value;
+        }
+
+        return default;
     }
     /// <summary>
     /// Returns private key flags.
     /// </summary>
     /// <returns>Private key flags.</returns>
-    public PrivateKeyFlags? GetPrivateKeyFlags() {
-        return (PrivateKeyFlags?)_certServerModule.GetLongProperty(pvarPropertyValue, CertificatePropertyName.PrivateKeyFlags.ToString(), true);
+    public PrivateKeyFlags GetPrivateKeyFlags() {
+        Int32? flags = _certServerModule.GetLongProperty(pvarPropertyValue, CertificatePropertyName.PrivateKeyFlags.ToString(), true);
+        if (flags.HasValue) {
+            return (PrivateKeyFlags)flags.Value;
+        }
+
+        return default;
     }
     /// <summary>
     /// Returns the certificate's serial number.
     /// </summary>
     /// <returns>Serial number.</returns>
-    public String GetSerialNumber() {
+    public String? GetSerialNumber() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.SerialNumber);
     }
     /// <summary>
     /// Returns the issued certificate's beginning timestamp.
     /// </summary>
     /// <returns>Certificate beginning timestamp.</returns>
-    public DateTime GetNotBefore() {
+    public DateTime? GetNotBefore() {
         return _certServerModule.GetCertProperty<DateTime>(pvarPropertyValue, CertificatePropertyName.NotBefore);
     }
     /// <summary>
     /// Returns issued certificate's expiration timestamp.
     /// </summary>
     /// <returns>Certificate expiration timestamp.</returns>
-    public DateTime GetNotAfter() {
+    public DateTime? GetNotAfter() {
         return _certServerModule.GetCertProperty<DateTime>(pvarPropertyValue, CertificatePropertyName.NotAfter);
     }
     /// <summary>
     /// Returns the subject key identifier (SKI) string.
     /// </summary>
     /// <returns>Subject key identifier.</returns>
-    public String GetSubjectKeyIdentifier() {
+    public String? GetSubjectKeyIdentifier() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.SubjectKeyIdentifier);
     }
     /// <summary>
     /// Returns ASN.1-encoded public key.
     /// </summary>
     /// <returns>Public key.</returns>
-    public Byte[] GetRawPublicKey() {
+    public Byte[]? GetRawPublicKey() {
         return _certServerModule.GetCertPropertyBin(pvarPropertyValue, CertificatePropertyName.RawPublicKey);
     }
     /// <summary>
     /// Returns public key binary length in bits.
     /// </summary>
     /// <returns>Public key length in bits.</returns>
-    public Int32 GetPublicKeyLength() {
+    public Int32? GetPublicKeyLength() {
         return _certServerModule.GetCertProperty<Int32>(pvarPropertyValue, CertificatePropertyName.PublicKeyLength);
     }
     /// <summary>
     /// Returns public key algorithm name.
     /// </summary>
     /// <returns>Public key algorithm name.</returns>
-    public String GetPublicKeyAlgorithm() {
+    public String? GetPublicKeyAlgorithm() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.PublicKeyAlgorithm);
     }
     /// <summary>
     /// Returns ASN.1-encoded public key algorithm parameters.
     /// </summary>
     /// <returns>Public key algorithm parameters.</returns>
-    public Byte[] GetRawPublicKeyAlgorithmParameters() {
+    public Byte[]? GetRawPublicKeyAlgorithmParameters() {
         return _certServerModule.GetCertPropertyBin(pvarPropertyValue, CertificatePropertyName.RawPublicKeyAlgorithmParameters);
     }
     /// <summary>
     /// Returns a user principal name (UPN) from issued certificate.
     /// </summary>
     /// <returns>User principal name.</returns>
-    public String GetUPN() {
+    public String? GetUPN() {
         return _certServerModule.GetCertProperty<String>(pvarPropertyValue, CertificatePropertyName.UPN);
     }
 
