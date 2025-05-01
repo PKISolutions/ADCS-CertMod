@@ -23,9 +23,6 @@ public class CertDbRow : Dictionary<String, Object?> {
     /// <param name="dictionary">Existing dictionary to copy values from.</param>
     /// <exception cref="ArgumentException">An element with the same key already exists in the dictionary.</exception>
     public void AddRange(IDictionary<String, Object?> dictionary) {
-        if (dictionary == null) {
-            return;
-        }
         foreach (KeyValuePair<String, Object?> name in dictionary) {
             Add(name.Key, name.Value);
         }
