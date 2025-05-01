@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="ADCS.CertMod.Managed/ADCS.CertMod.Managed.csproj" />
+</Solution>
