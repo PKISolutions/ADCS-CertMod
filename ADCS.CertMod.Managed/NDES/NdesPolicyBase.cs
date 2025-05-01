@@ -89,10 +89,10 @@ public abstract class NdesPolicyBase : INDESPolicy {
 
     #region private methods
 
-    void logTrace(String? message = null, [CallerMemberName] String caller = "", params Object[] parameters) {
+    void logTrace(String? message = null, [CallerMemberName] String caller = "", params Object[]? parameters) {
         Logger.LogTrace($"{_policyClassName}::{caller} {message}", parameters);
     }
-    void logDebug(String? message = null, [CallerMemberName] String caller = "", params Object[] parameters) {
+    void logDebug(String? message = null, [CallerMemberName] String caller = "", params Object[]? parameters) {
         Logger.LogDebug($"{_policyClassName}::{caller} {message}", parameters);
     }
     void dumpBlob(IntPtr ptr, String param, [CallerMemberName] String caller = "") {

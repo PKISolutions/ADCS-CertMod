@@ -16,7 +16,7 @@ public interface ILogWriter {
     /// </summary>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void LogTrace(String message, params Object[] args);
+    void LogTrace(String message, params Object[]? args);
     /// <summary>
     /// Formats and writes a trace log message.
     /// </summary>
@@ -28,7 +28,7 @@ public interface ILogWriter {
     /// </summary>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void LogDebug(String message, params Object[] args);
+    void LogDebug(String message, params Object[]? args);
     /// <summary>
     /// Formats and writes a debug log message.
     /// </summary>
@@ -40,7 +40,7 @@ public interface ILogWriter {
     /// </summary>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void LogInformation(String message, params Object[] args);
+    void LogInformation(String message, params Object[]? args);
     /// <summary>
     /// Formats and writes an informational log message.
     /// </summary>
@@ -52,7 +52,7 @@ public interface ILogWriter {
     /// </summary>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void LogWarning(String message, params Object[] args);
+    void LogWarning(String message, params Object[]? args);
     /// <summary>
     /// Formats and writes a warning log message.
     /// </summary>
@@ -64,7 +64,7 @@ public interface ILogWriter {
     /// </summary>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void LogError(String message, params Object[] args);
+    void LogError(String message, params Object[]? args);
     /// <summary>
     /// Formats and writes an error log message.
     /// </summary>
@@ -76,7 +76,7 @@ public interface ILogWriter {
     /// </summary>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void LogCritical(String message, params Object[] args);
+    void LogCritical(String message, params Object[]? args);
     /// <summary>
     /// Formats and writes a critical log message.
     /// </summary>
@@ -90,7 +90,7 @@ public interface ILogWriter {
     /// <param name="logLevel">Log level to write log message into.</param>
     /// <param name="message">Format string of the log message in message template format. Example: <code>User {User} logged in from {Address}"</code></param>
     /// <param name="args">An object array that contains zero or more objects to format.</param>
-    void Log(LogLevel logLevel, String message, params Object[] args);
+    void Log(LogLevel logLevel, String message, params Object[]? args);
     /// <summary>
     /// Formats and writes a log message at the specified log level.
     /// </summary>
