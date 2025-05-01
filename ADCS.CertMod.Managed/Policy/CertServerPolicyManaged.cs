@@ -21,9 +21,9 @@ class CertServerPolicyManaged : CertServerExitPolicyManaged, ICertServerPolicyMa
         Marshal.WriteInt32(pBstr, 0, extension.RawData.Length);
         Marshal.Copy(extension.RawData, 0, pBstr + 4, extension.RawData.Length);
         var variant = new OleAut32.VARIANT {
-                                               vt = 8, // VT_BSTR
-                                               pvRecord = pBstr + 4
-                                           };
+            vt = OleAut32.VT_BSTR,
+            pvRecord = pBstr + 4
+        };
         IntPtr pvarValue = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(OleAut32.VARIANT)));
         Marshal.StructureToPtr(variant, pvarValue, false);
         Int32 dwCritical = extension.Critical ? 1 : 0;
@@ -36,10 +36,7 @@ class CertServerPolicyManaged : CertServerExitPolicyManaged, ICertServerPolicyMa
     }
     public void DisableCertificateExtension(String extensionOid) {
         const Int32 EXTENSION_DISABLE_FLAG = 0x2;
-        var variant = new OleAut32.VARIANT {
-                                               vt = 0, // VT_EMPTY
-                                               pvRecord = IntPtr.Zero
-                                           };
+        var variant = new OleAut32.VARIANT();
         IntPtr pvarValue = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(OleAut32.VARIANT)));
         Marshal.StructureToPtr(variant, pvarValue, false);
         try {
