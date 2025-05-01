@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace ADCS.CertMod.Managed.Policy;
 
@@ -10,6 +11,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     const Int32 DEFAULT_POOL_SIZE = 32;
 
     readonly CertServerModulePool _pool;
+    readonly String _policyClassName;
 
     Action? funcShutdown;
     Action<String>? funcInitialize;
@@ -23,8 +25,10 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// <exception cref="ArgumentNullException"><strong>logger</strong> parameter is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><strong>poolSize</strong> value is beyond 1-63 range.</exception>
     protected CertPolicyBase(ILogWriter logger, Int32 poolSize = DEFAULT_POOL_SIZE) {
+        _policyClassName = GetType().Name;
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _pool = new CertServerModulePool(poolSize, true, Logger);
+        logDebug();
     }
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
@@ -34,8 +38,10 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// <param name="poolSize">Cert Server module pool size. Size must be between 1 and 63. Default is 32.</param>
     /// <exception cref="ArgumentOutOfRangeException"><strong>poolSize</strong> value is beyond 1-63 range.</exception>
     protected CertPolicyBase(String logFileName, LogLevel logLevel, Int32 poolSize = DEFAULT_POOL_SIZE) {
+        _policyClassName = GetType().Name;
         Logger = new LogWriter(logFileName, logLevel);
         _pool = new CertServerModulePool(poolSize, true, Logger);
+        logDebug();
     }
 
     /// <summary>
@@ -56,8 +62,16 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     [Obsolete("This member is not thread-safe. Use provided instance in 'VerifyRequest(CertServerModule, PolicyModuleAction, Boolean)' overload.", true)]
     protected CertServerModule? CertServer { get; }
 
+    void logTrace(String? message = null, [CallerMemberName] String caller = "", params Object[]? parameters) {
+        Logger.LogTrace($"{_policyClassName}::{caller} {message}", parameters);
+    }
+    void logDebug(String? message = null, [CallerMemberName] String caller = "", params Object[]? parameters) {
+        Logger.LogDebug($"{_policyClassName}::{caller} {message}", parameters);
+    }
+
     /// <inheritdoc cref="ICertPolicy.VerifyRequest"/>
     public PolicyModuleAction VerifyRequest(String strConfig, Int32 Context, Int32 bNewRequest, Int32 Flags) {
+        logDebug();
         CertServerModule certServer = _pool.GetNext();
         certServer.InitializeContext(Context);
 
@@ -77,6 +91,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
 
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
     public virtual void Initialize(String strConfig) {
+        logDebug();
         Type nativePolicyModuleType;
         String nativePolicyModuleName = DefaultPolicyProgID ?? WINDOWS_POLICY_DEFAULT;
         Logger.LogDebug($"[CertPolicyBase::Initialize] Native policy module ProgID: {nativePolicyModuleName}");
@@ -98,7 +113,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
         }
 
         try {
-            Object instance = Activator.CreateInstance(nativePolicyModuleType);
+            Object? instance = Activator.CreateInstance(nativePolicyModuleType);
             if (instance == null) {
                 throw new ArgumentException("Native policy module instance is null.");
             }
@@ -132,6 +147,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     }
     /// <inheritdoc cref="ICertPolicy2.ShutDown" />
     public virtual void ShutDown() {
+        logDebug();
         funcShutdown!.Invoke();
     }
     /// <inheritdoc cref="ICertPolicy.GetDescription"/>

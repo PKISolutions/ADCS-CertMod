@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace ADCS.CertMod.Managed.Exit;
 
@@ -9,6 +10,7 @@ public abstract class CertExitBase : ICertExit2 {
     const Int32 DEFAULT_POOL_SIZE = 32;
 
     readonly CertServerModulePool _pool;
+    readonly String _policyClassName;
 
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
@@ -18,8 +20,10 @@ public abstract class CertExitBase : ICertExit2 {
     /// <exception cref="ArgumentNullException"><strong>logger</strong> parameter is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException"><strong>poolSize</strong> value is beyond 1-63 range.</exception>
     protected CertExitBase(ILogWriter logger, Int32 poolSize = DEFAULT_POOL_SIZE) {
+        _policyClassName = GetType().Name;
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _pool = new CertServerModulePool(poolSize, false, Logger);
+        logDebug();
     }
     /// <summary>
     /// Initializes a new instance of <strong>CertPolicyBase</strong> class.
@@ -29,8 +33,10 @@ public abstract class CertExitBase : ICertExit2 {
     /// <param name="poolSize">Cert Server module pool size. Size must be between 1 and 63. Default is 32.</param>
     /// <exception cref="ArgumentOutOfRangeException"><strong>poolSize</strong> value is beyond 1-63 range.</exception>
     protected CertExitBase(String logFileName, LogLevel logLevel, Int32 poolSize = DEFAULT_POOL_SIZE) {
+        _policyClassName = GetType().Name;
         Logger = new LogWriter(logFileName, logLevel);
         _pool = new CertServerModulePool(poolSize, false, Logger);
+        logDebug();
     }
 
     /// <summary>
@@ -44,10 +50,18 @@ public abstract class CertExitBase : ICertExit2 {
     [Obsolete("This member is not thread-safe. Use provided instance in 'Notify(CertServerModule, ExitEvents, Int32)' overload.", true)]
     protected CertServerModule? CertServer { get; }
 
+    void logTrace(String? message = null, [CallerMemberName] String caller = "", params Object[]? parameters) {
+        Logger.LogTrace($"{_policyClassName}::{caller} {message}", parameters);
+    }
+    void logDebug(String? message = null, [CallerMemberName] String caller = "", params Object[]? parameters) {
+        Logger.LogDebug($"{_policyClassName}::{caller} {message}", parameters);
+    }
+
     /// <inheritdoc cref="ICertExit.Initialize" />
     public abstract ExitEvents Initialize(String strConfig);
     /// <inheritdoc cref="ICertExit.Notify" />
     public void Notify(ExitEvents ExitEvent, Int32 Context) {
+        logDebug();
         CertServerModule certServer = _pool.GetNext();
         certServer.InitializeEvent(Context, ExitEvent);
         try {
