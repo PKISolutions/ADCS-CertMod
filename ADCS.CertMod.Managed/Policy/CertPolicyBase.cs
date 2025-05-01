@@ -78,9 +78,9 @@ public abstract class CertPolicyBase : ICertPolicy2 {
     /// <inheritdoc cref="ICertPolicy.Initialize"/>
     public virtual void Initialize(String strConfig) {
         Type nativePolicyModuleType;
-        String nativePolicyModuleName = DefaultPolicyProgID ?? "Windows Default";
+        String nativePolicyModuleName = DefaultPolicyProgID ?? WINDOWS_POLICY_DEFAULT;
         Logger.LogDebug($"[CertPolicyBase::Initialize] Native policy module ProgID: {nativePolicyModuleName}");
-        if (String.IsNullOrWhiteSpace(DefaultPolicyProgID)) {
+        if (WINDOWS_POLICY_DEFAULT.Equals(nativePolicyModuleName)) {
             nativePolicyModuleType = Type.GetTypeFromProgID(WINDOWS_POLICY_DEFAULT, false);
             if (nativePolicyModuleType == null) {
                 throw new ArgumentException("COM class is not registered.");
