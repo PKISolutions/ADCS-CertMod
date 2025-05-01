@@ -94,3 +94,27 @@ public class MyPolicyClass : CertPolicyBase {
 - `<ModuleName>` is module simple name. The full ProgID must look like `MyCoolPolicyModule.Policy`, where `.Policy` suffix is mandatory.
 - `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
 - `ICertPolicy2.GetManageModule` returns an instance of `ICertManageModule` implementation (see above).
+
+## NDES Policy module guide
+`INDESPolic` interface must be implemented and exposed to COM world in order to create NDES policy module.\
+
+### INDESPolicy interface
+Create a class that inherits from `NdesPolicy` base (which already implements `INDESPolicy` interface) and define the following attributes:
+```C#
+[ComVisible(true)]
+[ClassInterface(ClassInterfaceType.None)]
+[ProgId("<ModuleName>.Policy")]
+[Guid("<00000000-0000-0000-0000-000000000000>")]
+public class MyNdesPolicyModule : NdesPolicyBase {
+    public MyNdesPolicyModule() : base(
+        new LogWriter("MyModule"),
+        new DefaultSCEPChallengeStore(new DefaultSCEPChallengeGenerator())) {
+        // my other implementation-specific code if needed
+    }
+// <...> the rest of implementation is omitted for brevity
+}
+```
+- `<ModuleName>` is module simple name. The full ProgID must look like `MyNdesModule.ProgID`, where `.Policy` suffix is mandatory.
+- `<00000000-0000-0000-0000-000000000000>` is a randomly generated UUID that identifies your implementation.
+
+See [this PR](https://github.com/PKISolutions/ADCS-CertMod/pull/10) for more details on NDES policy module.
