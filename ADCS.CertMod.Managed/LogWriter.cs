@@ -86,7 +86,7 @@ public class LogWriter : ILogWriter {
         lock (_lock) {
             try {
                 String value = message;
-                if (args != null && args.Any()) {
+                if (args is not null && args.Any()) {
                     value = String.Format(message, args);
                 }
 
@@ -111,7 +111,7 @@ public class LogWriter : ILogWriter {
                 do {
                     sw.WriteLine("Exception type: " + e.GetType().FullName);
                     sw.WriteLine($"Error message: {e.Message}");
-                } while ((e = e.InnerException) != null);
+                } while ((e = e.InnerException) is not null);
                 sw.WriteLine("Stack Trace:");
                 sw.WriteLine($"{exception.StackTrace?.TrimEnd()}");
             } catch { }

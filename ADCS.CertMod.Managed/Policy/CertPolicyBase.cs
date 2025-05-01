@@ -97,16 +97,16 @@ public abstract class CertPolicyBase : ICertPolicy2 {
         Logger.LogDebug($"[CertPolicyBase::Initialize] Native policy module ProgID: {nativePolicyModuleName}");
         if (WINDOWS_POLICY_DEFAULT.Equals(nativePolicyModuleName)) {
             nativePolicyModuleType = Type.GetTypeFromProgID(WINDOWS_POLICY_DEFAULT, false);
-            if (nativePolicyModuleType == null) {
+            if (nativePolicyModuleType is null) {
                 throw new ArgumentException("COM class is not registered.");
             }
         } else {
             nativePolicyModuleType = Type.GetTypeFromProgID(DefaultPolicyProgID, false);
-            if (nativePolicyModuleType == null) {
+            if (nativePolicyModuleType is null) {
                 Logger.LogError("[CertPolicyBase::Initialize] Unable to discover native policy module with ProgID: {0}", nativePolicyModuleName);
                 // fallback to Windows Default policy module.
                 nativePolicyModuleType = Type.GetTypeFromProgID(WINDOWS_POLICY_DEFAULT, false);
-                if (nativePolicyModuleType == null) {
+                if (nativePolicyModuleType is null) {
                     throw new ArgumentException("COM class is not registered.");
                 }
             }
@@ -114,7 +114,7 @@ public abstract class CertPolicyBase : ICertPolicy2 {
 
         try {
             Object? instance = Activator.CreateInstance(nativePolicyModuleType);
-            if (instance == null) {
+            if (instance is null) {
                 throw new ArgumentException("Native policy module instance is null.");
             }
             // we can cast native COM-based policy module to our ICertPolicy interface.

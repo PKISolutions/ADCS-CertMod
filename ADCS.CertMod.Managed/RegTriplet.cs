@@ -25,7 +25,7 @@ public class RegTriplet {
     /// <exception cref="ArgumentNullException"><strong>entry</strong> parameter is null.</exception>
     /// <exception cref="ArgumentException">entry name is null or empty string.</exception>
     public RegTriplet(AppConfigEntry entry) {
-        if (entry == null) {
+        if (entry is null) {
             throw new ArgumentNullException(nameof(entry));
         }
         if (String.IsNullOrEmpty(entry.Name)) {
