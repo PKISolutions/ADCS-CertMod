@@ -2,5 +2,5 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
-  <Project Path="ADCS.CertMod.Managed/ADCS.CertMod.Managed.csproj" />
+  <Project Path="ADCS.CertMod.Managed/ADCS.CertMod.Managed.csproj" Id="800dc7b7-b860-44c1-b074-512bf3c70ac6" />
 </Solution>
