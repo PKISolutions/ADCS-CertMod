@@ -10,7 +10,6 @@
     <Company>PKI Solutions LLC</Company>
     <Description>Base framework to build ADCS Certification Authority policy and exit modules</Description>
     <Copyright>© PKI Solutions LLC, 2022-2025</Copyright>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/PKISolutions/ADCS-CertMod</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -20,12 +19,6 @@
   <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Security" />
   </ItemGroup>
