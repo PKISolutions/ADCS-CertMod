@@ -31,7 +31,7 @@ public class LogWriter : ILogWriter {
     public LogLevel LogLevel { get; set; }
 
     /// <inheritdoc />
-    public void LogTrace(String message, params Object[] args) {
+    public void LogTrace(String message, params Object[]? args) {
         Log(LogLevel.Trace, message, args);
     }
     /// <inheritdoc />
@@ -39,7 +39,7 @@ public class LogWriter : ILogWriter {
         Log(LogLevel.Trace, exception, source);
     }
     /// <inheritdoc />
-    public void LogDebug(String message, params Object[] args) {
+    public void LogDebug(String message, params Object[]? args) {
         Log(LogLevel.Debug, message, args);
     }
     /// <inheritdoc />
@@ -47,7 +47,7 @@ public class LogWriter : ILogWriter {
         Log(LogLevel.Debug, exception, source);
     }
     /// <inheritdoc />
-    public void LogInformation(String message, params Object[] args) {
+    public void LogInformation(String message, params Object[]? args) {
         Log(LogLevel.Information, message, args);
     }
     /// <inheritdoc />
@@ -55,7 +55,7 @@ public class LogWriter : ILogWriter {
         Log(LogLevel.Information, exception, source);
     }
     /// <inheritdoc />
-    public void LogWarning(String message, params Object[] args) {
+    public void LogWarning(String message, params Object[]? args) {
         Log(LogLevel.Warning, message, args);
     }
     /// <inheritdoc />
@@ -63,7 +63,7 @@ public class LogWriter : ILogWriter {
         Log(LogLevel.Warning, exception, source);
     }
     /// <inheritdoc />
-    public void LogError(String message, params Object[] args) {
+    public void LogError(String message, params Object[]? args) {
         Log(LogLevel.Error, message, args);
     }
     /// <inheritdoc />
@@ -71,7 +71,7 @@ public class LogWriter : ILogWriter {
         Log(LogLevel.Error, exception, source);
     }
     /// <inheritdoc />
-    public void LogCritical(String message, params Object[] args) {
+    public void LogCritical(String message, params Object[]? args) {
         Log(LogLevel.Critical, message, args);
     }
     /// <inheritdoc />
@@ -80,7 +80,7 @@ public class LogWriter : ILogWriter {
     }
 
     /// <inheritdoc />
-    public void Log(LogLevel logLevel, String message, params Object[] args) {
+    public void Log(LogLevel logLevel, String message, params Object[]? args) {
         if (LogLevel == LogLevel.None || logLevel < LogLevel) {
             return;
         }
