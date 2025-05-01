@@ -1,118 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{800DC7B7-B860-44C1-B074-512BF3C70AC6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ADCS.CertMod.Managed</RootNamespace>
-    <AssemblyName>ADCS.CertMod.Managed</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net472</TargetFramework>
+    <Version>2.0.1</Version>
     <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
-    <DocumentationFile>bin\Release\ADCS.CertMod.Managed.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>strongname.snk</AssemblyOriginatorKeyFile>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>ADCS.CertMod.Managed</Title>
+    <Authors>Vadims Podans</Authors>
+    <Company>PKI Solutions LLC</Company>
+    <Description>Base framework to build ADCS Certification Authority policy and exit modules</Description>
+    <Copyright>© PKI Solutions LLC, 2022-2025</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/PKISolutions/ADCS-CertMod</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>StrongName.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <SourceRoot Include="$(MSBuildThisFileDirectory)/" />
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Security" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AppConfigEntry.cs" />
-    <Compile Include="CertDbRow.cs" />
-    <Compile Include="CertManageModule.cs" />
-    <Compile Include="CertServerModule.cs" />
-    <Compile Include="AdcsCrlReason.cs" />
-    <Compile Include="CertServerModulePool.cs" />
-    <Compile Include="CertServerModuleType.cs" />
-    <Compile Include="Exit\CertServerExitManaged.cs" />
-    <Compile Include="GeneralFlags.cs" />
-    <Compile Include="EnrollmentFlags.cs" />
-    <Compile Include="NDES\DefaultSCEPChallengeGenerator.cs" />
-    <Compile Include="NDES\DefaultSCEPChallengeStore.cs" />
-    <Compile Include="NDES\ISCEPChallengeGenerator.cs" />
-    <Compile Include="NDES\INDESPolicy.cs" />
-    <Compile Include="NDES\ISCEPChallengeStore.cs" />
-    <Compile Include="Extensions\IsExternalInit.cs" />
-    <Compile Include="NDES\NdesPolicyBase.cs" />
-    <Compile Include="NDES\SCEPChallengeStoreEntry.cs" />
-    <Compile Include="NDES\SCEPDisposition.cs" />
-    <Compile Include="NDES\SCEPFailInfo.cs" />
-    <Compile Include="Interop\CertServerComFactory.cs" />
-    <Compile Include="Interop\ICertServerExit.cs" />
-    <Compile Include="Interop\ICertServerPolicy.cs" />
-    <Compile Include="ObjectPool.cs" />
-    <Compile Include="Policy\CertServerPolicyManaged.cs" />
-    <Compile Include="PrivateKeyFlags.cs" />
-    <Compile Include="Exit\CertExitBase.cs" />
-    <Compile Include="Exit\ExitEvents.cs" />
-    <Compile Include="Exit\ICertExit2.cs" />
-    <Compile Include="ICertManageModule.cs" />
-    <Compile Include="Exit\ICertExit.cs" />
-    <Compile Include="Extensions\CertificatePropertyName.cs" />
-    <Compile Include="Extensions\CertSrvH.cs" />
-    <Compile Include="Extensions\CertServerModuleExtensions.cs" />
-    <Compile Include="Extensions\IntPtrExtensions.cs" />
-    <Compile Include="Extensions\RequestAttributeName.cs" />
-    <Compile Include="Extensions\RequestPropertyName.cs" />
-    <Compile Include="Extensions\RequestSubjectName.cs" />
-    <Compile Include="Extensions\SecureStringExtensions.cs" />
-    <Compile Include="CertServerExitPolicyManaged.cs" />
-    <Compile Include="ICertServerModule.cs" />
-    <Compile Include="ICertServerPolicyManaged.cs" />
-    <Compile Include="ILogWriter.cs" />
-    <Compile Include="LogLevel.cs" />
-    <Compile Include="LogWriter.cs" />
-    <Compile Include="OleAut32.cs" />
-    <Compile Include="Policy\CertPolicyBase.cs" />
-    <Compile Include="Policy\ICertPolicy.cs" />
-    <Compile Include="Policy\ICertPolicy2.cs" />
-    <Compile Include="Policy\PolicyModuleAction.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistryService.cs" />
-    <Compile Include="RegTriplet.cs" />
-    <Compile Include="RequestAttribute.cs" />
-    <Compile Include="RequestDisposition.cs" />
-    <Compile Include="RequestExtension.cs" />
-    <Compile Include="RequestExtensionFlags.cs" />
-    <Compile Include="RequestFlags.cs" />
-    <Compile Include="RequestType.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="strongname.snk" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
