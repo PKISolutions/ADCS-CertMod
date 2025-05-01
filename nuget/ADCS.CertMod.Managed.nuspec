@@ -3,20 +3,20 @@
     <metadata>
         <id>ADCS.CertMod.Managed</id>
         <version>$version$</version>
-        <authors>Vadims Podans, PKI Solutions Inc.</authors>
+        <authors>Vadims Podans, PKI Solutions LLC</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
         <!-- <icon>icon.png</icon> -->
         <projectUrl>https://github.com/PKISolutions/ADCS-CertMod</projectUrl>
-        <description>Base framework to build ADCS Certification Authority policy and exit modules</description>
+        <description>Base framework to build ADCS Certification Authority and NDES policy and exit modules</description>
         <releaseNotes>Initial release.</releaseNotes>
-        <copyright>© PKI Solutions Inc., 2022</copyright>
-        <tags>PKI ADCS CertificateServices</tags>
+        <copyright>© PKI Solutions Inc., 2022-$year$</copyright>
+        <tags>PKI ADCS CertificateServices SCEP NDES</tags>
         <dependencies>
-            <group targetFramework=".NETFramework4.7.2"/>
+            <group targetFramework="net472"/>
         </dependencies>
     </metadata>
     <files>
-        <file src="..\ADCS.CertMod.Managed\bin\Release\*.*" target="lib/net472"/>
+        <file src="..\ADCS.CertMod.Managed\bin\Release\net472\*.*" target="lib/net472"/>
     </files>
 </package>
