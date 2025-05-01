@@ -11,7 +11,7 @@ public interface ISCEPChallengeStore {
     /// </summary>
     /// <param name="template">Specifies template name the challenge password is requested for.</param>
     /// <param name="parameters">Optional SCEP challenge password parameters.</param>
-    /// <returns></returns>
+    /// <returns>SCEP challenge password string.</returns>
     /// <remarks>
     /// Implementers are responsible to keep track of generated passwords.
     /// </remarks>

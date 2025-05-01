@@ -21,7 +21,7 @@ public class RegTriplet {
     /// <summary>
     /// Initializes a new instance of <strong>RegTriplet</strong> class from app config entry.
     /// </summary>
-    /// <param name="entry"></param>
+    /// <param name="entry">Application config entry.</param>
     /// <exception cref="ArgumentNullException"><strong>entry</strong> parameter is null.</exception>
     /// <exception cref="ArgumentException">entry name is null or empty string.</exception>
     public RegTriplet(AppConfigEntry entry) {
