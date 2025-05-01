@@ -92,7 +92,8 @@ public class LogWriter : ILogWriter {
                 }
 
                 using StreamWriter sw = File.AppendText(_logPath);
-                sw.WriteLine($"[{DateTime.Now}] {value}");
+                String severity = severityToString(logLevel);
+                sw.WriteLine($"[{severity}][{DateTime.Now}] {value}");
             } catch { }
         }
     }
@@ -105,8 +106,9 @@ public class LogWriter : ILogWriter {
         lock (_lock) {
             try {
                 using StreamWriter sw = File.AppendText(_logPath);
-                sw.WriteLine($"[{DateTime.Now}] An exception at source '{source}' occurred.");
-                Exception e = exception;
+                String severity = severityToString(logLevel);
+                sw.WriteLine($"[{severity}][{DateTime.Now}] An exception at source '{source}' occurred.");
+                Exception? e = exception;
                 do {
                     sw.WriteLine("Exception type: " + e.GetType().FullName);
                     sw.WriteLine($"Error message: {e.Message}");
@@ -114,6 +116,27 @@ public class LogWriter : ILogWriter {
                 sw.WriteLine("Stack Trace:");
                 sw.WriteLine($"{exception.StackTrace?.TrimEnd()}");
             } catch { }
+        }
+    }
+    
+    static String severityToString(LogLevel logLevel) {
+        switch (logLevel) {
+            case LogLevel.None:
+                return "none";
+            case LogLevel.Trace:
+                return "trce";
+            case LogLevel.Debug:
+                return "dbug";
+            case LogLevel.Information:
+                return "info";
+            case LogLevel.Warning:
+                return "warn";
+            case LogLevel.Error:
+                return "fail";
+            case LogLevel.Critical:
+                return "crit";
+            default:
+                throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null);
         }
     }
 }
